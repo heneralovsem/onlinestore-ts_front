@@ -1,25 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import AppRouter from './components/AppRouter';
+import { Context } from '.';
+import { check } from './http/userAPI';
+import { userSlice } from './store/reducers/UserSlice';
+import { useAppDispatch } from './hooks/redux';
+import { IUser } from './types/types';
+import MainLoader from './components/MainLoader/MainLoader';
+// import { userAPI } from './services/UserService';
 
 function App() {
+  const {setIsAuth} = userSlice.actions
+  const {setUser} = userSlice.actions
+  const [loading, setLoading] = useState<boolean>(true)
+  const dispatch = useAppDispatch()
+  // const {data: user} = userAPI.useCheckUserQuery('')
+  // console.log(user)
+  useEffect(()  => {
+      const checkAuth = async () => {
+        try {
+        const data = await check()
+        dispatch(setIsAuth(true))
+        dispatch(setUser(data as IUser[]))
+        }
+        catch (e: any) {
+          
+        }
+        finally {
+        setLoading(false)
+        }
+    }
+    checkAuth()
+  }, [])
+  if (loading) {
+    return <MainLoader/>
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <Navbar/>
+        <AppRouter/>
+    </BrowserRouter>
   );
 }
 
