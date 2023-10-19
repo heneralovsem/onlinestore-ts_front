@@ -1,0 +1,9 @@
+.device__img {
+    width: 200px;
+    height: 150px;
+}
+.device__item__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

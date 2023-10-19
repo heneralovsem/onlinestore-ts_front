@@ -8,6 +8,8 @@ import { deviceAPI } from "../../services/DeviceService";
 import CloseIcon from "@mui/icons-material/Close";
 import cl from "./Shop.module.css";
 import DeviceItem from "../DeviceItem/DeviceItem";
+import { useAppSelector } from "../../hooks/redux";
+import { basketAPI } from "../../services/BasketService";
 // import { createDevice } from "../../http/deviceAPI";
 
 const Shop: FC = () => {
@@ -22,12 +24,16 @@ const Shop: FC = () => {
   const [deviceTitle, setDeviceTitle] = useState<string>("");
   const [deviceDesc, setDeviceDesc] = useState<string>("");
   const [info, setInfo] = useState<Array<any>>([])
+  const {user} = useAppSelector(state => state.userReducer)
   const { data: types, error, isLoading } = typesAPI.useFetchAllTypesQuery("");
   const [createType, {}] = typesAPI.useCreateTypeMutation();
   const { data: brands } = brandsAPI.useFetchAllBrandsQuery("");
   const [createBrand, {}] = brandsAPI.useCreateBrandMutation();
   const { data: devices } = deviceAPI.useFetchAllDevicesQuery("");
   console.log(devices);
+  //@ts-ignore
+  const {data: basketDevices} = basketAPI.useFetchAllBasketDevicesQuery(user.id)
+  const [deleteAllBasketDevices, {}] = basketAPI.useDeleteAllBasketDevicesMutation()
   const [createDevice, {}] = deviceAPI.useCreateDeviceMutation()
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //@ts-ignore
@@ -36,6 +42,7 @@ const Shop: FC = () => {
   const addInfo = () => {
     setInfo([...info, {title: '', description: '', number: Date.now()}])
 }
+
 const removeInfo = (number:any) => {
     setInfo(info.filter(i => i.number !== number))
 }
@@ -79,8 +86,22 @@ const selectTypeHandler = (e: SelectChangeEvent) => {
   const closeDeviceModal = () => {
     setDeviceModal(false);
   };
+  const clearBasket =  async ()  => {
+    //@ts-ignore
+   await deleteAllBasketDevices(user.id)
+  }
+  // @ts-ignore
+  // const addBasketDevice = async () => {
+  //   await createBasketDevice({
+  //     //@ts-ignore
+  //     basketId: user.id,
+  //     deviceId: 
+  //   })
+  // }
+  console.log(basketDevices)
   return (
     <div>
+      <Button onClick={clearBasket} variant="outlined">Clear all</Button>
       <TextField
         value={typeName}
         placeholder="Type name..."
@@ -237,16 +258,32 @@ const selectTypeHandler = (e: SelectChangeEvent) => {
           </div>
         </div>
       </Modal>
+      <div>
+      <div className={cl.shop__flex__row}>
+      <div className={cl.types__column}>
       {types?.map((type) => (
         <TypeItem key={type.id} type={type} />
       ))}
+      </div>
+      <div className={cl.shop__flex__column}>
+      <div className={cl.brands__row}>
       {brands?.map((brand) => (
         <BrandItem key={brand.id} brand={brand} />
       ))}
-
+      </div>
+      <div className={cl.devices__row}>
       {devices?.rows?.map((device: any) => (
         <DeviceItem key={device.id} device={device} />
       ))}
+      </div>
+      </div>
+      </div>
+      </div>
+      <div>
+      {basketDevices?.map((device:any) => (
+        <DeviceItem key={device.id} device={device} />
+      ))}
+      </div>
     </div>
   );
 };

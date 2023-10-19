@@ -31,6 +31,27 @@
     right: 0px;
     top: 0px;
 }
+.brands__row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.devices__row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.shop__flex__row {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+.shop__flex__column {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
 @media screen and (max-width:768px) {
     .modal__container {
         width: 300px;

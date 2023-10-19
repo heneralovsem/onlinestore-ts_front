@@ -19,6 +19,13 @@ export const typesAPI = createApi({
                 body: type
             }),
             invalidatesTags: ['Type']
+        }),
+        deleteType: build.mutation({
+            query: (id) => ({
+                url: `api/type/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Type']
         })
     })
 })

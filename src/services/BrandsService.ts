@@ -19,6 +19,13 @@ export const brandsAPI = createApi({
                 body: brand
             }),
             invalidatesTags: ['Brand']
+        }),
+        deleteBrand: build.mutation({
+            query: (id) => ({
+                url: `api/brand/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Brand']
         })
     })
 })
