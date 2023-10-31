@@ -23,7 +23,7 @@ function App() {
         try {
         const data = await check()
         dispatch(setIsAuth(true))
-        dispatch(setUser(data as IUser[]))
+        dispatch(setUser(data as IUser))
         }
         catch (e: any) {
           

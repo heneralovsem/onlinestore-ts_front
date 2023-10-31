@@ -5,6 +5,8 @@ import cl from './DeviceItem.module.css'
 import { basketAPI } from '../../services/BasketService';
 import { Button } from '@mui/material';
 import { useAppSelector } from '../../hooks/redux';
+import { deviceAPI } from '../../services/DeviceService';
+import { reviewAPI } from '../../services/ReviewService';
 
 interface DeviceItemProps {
     device: IDevice
@@ -17,7 +19,8 @@ const DeviceItem : FC<DeviceItemProps> = ({device}) => {
     }
     const [createBasketDevice, {}] = basketAPI.useCreateBasketDeviceMutation()
     const {user} = useAppSelector(state => state.userReducer)
-    const [deleteOneBasketDevice, {}] = basketAPI.useDeleteOneBasketDeviceMutation()
+    const [deleteOneDevice, {}] = deviceAPI.useDeleteOneDeviceMutation()
+    const {data: avgRating} = reviewAPI.useFetchAverageRatingQuery(device.id)
     const addBasketDevice = async () => {
         await createBasketDevice({
           //@ts-ignore
@@ -25,20 +28,21 @@ const DeviceItem : FC<DeviceItemProps> = ({device}) => {
           deviceId: device.id
         })
       }
-      const clearBasketDevice = async () => {
-        await deleteOneBasketDevice(device.id)
+      const deleteDevice = async () => {
+        await deleteOneDevice(device.id)
       }
+      console.log(device)
     return (
         <div className={cl.device__item__wrapper} >
            <p>{device.id}</p>
            <p>{device.name}</p>
            <p>{device.price}</p> 
-           <p>{device.rating}</p> 
+           <p>{avgRating}</p> 
            <div onClick={getId}>
            {process.env.REACT_APP_API_URL && <img className={cl.device__img} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
            </div>
            <Button onClick={addBasketDevice} variant='outlined'>Add to basket</Button>
-           <Button onClick={clearBasketDevice} variant='outlined'>Clear one</Button>
+           <Button onClick={deleteDevice} variant='outlined'>Delete</Button>
         </div>
     )
 

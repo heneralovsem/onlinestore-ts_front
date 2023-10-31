@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IDevice } from '../types/types'
 
 export const deviceAPI = createApi({
@@ -7,12 +7,16 @@ export const deviceAPI = createApi({
     tagTypes: ['Device'],
     endpoints: (build) => ({
         fetchAllDevices: build.query({
-            query: () => ({
-                url: `api/device`
+            query: (args) => ({
+                url: `api/device`,
+                params: {
+                    typeId: args.typeId,
+                    brandId: args.brandId
+                }
             }),
             providesTags: result => ['Device']
         }),
-        fetchOneDevice: build.query({
+        fetchOneDevice: build.query<IDevice, any>({
             query: (id) => ({
                 url: `api/device/${id}`
             }),
@@ -25,6 +29,13 @@ export const deviceAPI = createApi({
                 body: device
             }),
             invalidatesTags: ['Device']
-        })
+        }),
+        deleteOneDevice: build.mutation({
+            query: (id) => ({
+                url: `api/device/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Device']
+        }),
     })
 })

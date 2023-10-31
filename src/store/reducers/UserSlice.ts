@@ -3,12 +3,12 @@ import { IUser } from "../../types/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
-    user: IUser[],
+    user: IUser,
     isAuth: boolean
 }
 
 const initialState: UserState = {
-    user: [{}],
+    user: {},
     isAuth: false,
 }
 
@@ -19,7 +19,7 @@ export const userSlice = createSlice({
         setIsAuth(state, action: PayloadAction<boolean>) {
             state.isAuth = action.payload
         },
-        setUser(state, action: PayloadAction<IUser[]>) {
+        setUser(state, action: PayloadAction<IUser>) {
             state.user = action.payload
         }
     }

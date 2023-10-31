@@ -25,5 +25,17 @@ export interface IDevice {
     img?: string;
     typeId?:number;
     brandId?:number;
-    info?: IDeviceInfo
+    info?: IDeviceInfo[]
+}
+export interface IBasketDevice {
+    id?: number;
+    deviceId?: number;
+    basketId?:number;
+}
+export interface IReview {
+    id?: number;
+    deviceId?: number;
+    rating?: number;
+    text?: string;
+    userId?: number;
 }

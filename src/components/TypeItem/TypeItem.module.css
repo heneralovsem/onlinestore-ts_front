@@ -1,0 +1,9 @@
+.item__wrapper {
+    border:1px solid lightgray ;
+    padding-bottom: 20px;
+}
+.selected__item__wrapper {
+    border:1px solid lightgray ;
+    padding-bottom: 20px;
+    background-color: lightblue;
+}

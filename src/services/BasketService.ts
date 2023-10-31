@@ -39,7 +39,7 @@ export const basketAPI = createApi({
         
         deleteAllBasketDevices: build.mutation({
             query: (basketId) => ({
-                url: `api/basket/devices/${basketId}`,
+                url: `api/basket/devices/selected/${basketId}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Basket']

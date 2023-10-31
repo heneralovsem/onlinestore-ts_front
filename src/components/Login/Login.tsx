@@ -23,7 +23,7 @@ const Login: FC = () => {
     const signIn = async () => {
       try {
         const data = await registration(email, password)
-        dispatch(setUser(data as IUser[]))
+        dispatch(setUser(data as IUser))
         dispatch(setIsAuth(true))
       }
       catch (e: any) {
@@ -34,7 +34,7 @@ const Login: FC = () => {
     const logIn = async () => {
     try {
       const data = await login(email, password)
-      dispatch(setUser(data as IUser[]))
+      dispatch(setUser(data as IUser))
       dispatch(setIsAuth(true))
     }
     catch (e: any) {

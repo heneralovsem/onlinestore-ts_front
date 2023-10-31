@@ -11,7 +11,7 @@
     gap: 20px;
     flex-direction: column;
     text-align: center;
-    max-height: 60%;
+    max-height: 75%;
     overflow-y: auto;
 }
 .modal__btn {
@@ -23,26 +23,18 @@
     right: 0px;
     top: 0px;
 }
-.brands__row {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-.devices__row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-.shop__flex__row {
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
-}
-.shop__flex__column {
+.modal__buttons {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
+}
+.modal__content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.modal__select {
+    max-width: 150px;
 }
 @media screen and (max-width:768px) {
     .modal__container {
