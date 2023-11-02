@@ -8,6 +8,7 @@ import BasketDevice from "../BasketDevice/BasketDevice";
 import { basketAPI } from "../../services/BasketService";
 import { reviewAPI } from "../../services/ReviewService";
 import { useAppSelector } from "../../hooks/redux";
+import dayjs from "dayjs";
 
 interface ReviewModalProps {
   modal: boolean;
@@ -28,13 +29,17 @@ const ReviewModal: FC<ReviewModalProps> = ({
 
 
     const sendReview = async () => {
-      if (rating && rating > 0 && textValue.trim() !== '' )
+      if (rating && rating > 0 && textValue.trim() !== '' ) {
+      const currentDate = new Date ();
+
       await createReview({
         rating: rating,
         text: textValue,
+        date: dayjs(currentDate).format('DD.MM.YY'),
         deviceId: deviceId,
         userId: user.id
       })
+    }
     }
   
   return (

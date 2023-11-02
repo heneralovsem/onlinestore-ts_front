@@ -20,6 +20,7 @@ const ReviewItem : FC<BrandItemProps> = ({review}) => {
         <div>
             <div>
             <p>{review.id}</p>
+            <p>{review.date}</p>
             <div className={cl.rating__wrapper}>
             <Rating
               name="simple-controlled"

@@ -36,6 +36,7 @@ export interface IReview {
     id?: number;
     deviceId?: number;
     rating?: number;
+    date?: string
     text?: string;
     userId?: number;
 }
