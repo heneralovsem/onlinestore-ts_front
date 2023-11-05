@@ -14,7 +14,15 @@ export const basketAPI = createApi({
             }),
             providesTags: result => ['Basket']
         }),
-        
+        fetchTotalPrice: build.query<string, any>({
+            query: (basketId) => ({
+                url: `api/basket/devices/price`,
+                params: {
+                    basketId: basketId
+                }
+            }),
+            providesTags: result => ['Basket']
+        }),
         fetchBasket: build.query({
             query: () => ({
                 url: `api/basket`

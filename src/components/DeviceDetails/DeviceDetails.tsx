@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom';
 import { deviceAPI } from '../../services/DeviceService';
 import  cl from './DeviceDetails.module.css'
@@ -6,15 +6,31 @@ import { Button } from '@mui/material';
 import ReviewModal from '../ReviewModal/ReviewModal';
 import { reviewAPI } from '../../services/ReviewService';
 import ReviewItem from '../ReviewItem/ReviewItem';
+import { useAppSelector } from '../../hooks/redux';
+import { IReview } from '../../types/types';
 
 
 const DeviceDetails : FC = ({}) => {
     
     const params = useParams()
     const [reviewModal, setReviewModal] = useState<boolean>(false)
+    const [isReviewPresent, setIsReviewPresent] = useState<boolean>(false)
+    const {user} = useAppSelector(state => state.userReducer)
     const {data: device, error, isLoading} = deviceAPI.useFetchOneDeviceQuery(params.id)
     const {data: reviews} = reviewAPI.useFetchAllReviewsQuery(params.id)
+    
     console.log(device)
+    console.log(reviews)
+    useEffect(() => {
+        const check = () => {
+           reviews?.forEach(element => {
+            if (element.userId === user.id) {
+                setIsReviewPresent(true)
+            }
+           })
+        }
+        check()
+    }, [reviews])
     const openReviewModal = () => {
         setReviewModal(true)
     }
@@ -33,7 +49,8 @@ const DeviceDetails : FC = ({}) => {
             <span>{device?.info[0].title}</span>
             <span>{device?.info[0].description}</span>
             </div>}
-            <Button variant='outlined' onClick={openReviewModal}>Review</Button>
+            {!isReviewPresent && <Button variant='outlined' onClick={openReviewModal}>Review</Button>}
+            
             {params.id && <ReviewModal modal={reviewModal} deviceId={+params.id} closeModal={closeReviewModal}/> }
             {reviews?.map((review) => (
                 <ReviewItem key={review.id} review={review}/>

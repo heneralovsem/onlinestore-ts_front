@@ -75,15 +75,14 @@ const Navbar: FC = () => {
 
         <div className={cl.auth__links}>
           {!isAuth ? (
-            <Button variant="outlined">
+            
               <Link className={cl.button__link} to="/login">
-                Log in
+                <Button variant="outlined">Log in</Button>
               </Link>
-            </Button>
           ) : (
             <div className={cl.auth__flex}>
               <Button variant="outlined" onClick={openAdminModal}>Admin</Button>
-              <AdminModal modal={isAdminModal} closeModal={closeAdminModal}/>
+              <AdminModal modal={isAdminModal} setModal={setIsAdminModal}/>
               <div className={cl.icon__button__wrapper}>
                 <IconButton onClick={openBasketModal}>
                   <ShoppingCartIcon color="primary"/>

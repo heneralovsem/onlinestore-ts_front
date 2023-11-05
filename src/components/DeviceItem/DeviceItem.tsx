@@ -25,7 +25,8 @@ const DeviceItem : FC<DeviceItemProps> = ({device}) => {
         await createBasketDevice({
           //@ts-ignore
           basketId: user.id,
-          deviceId: device.id
+          deviceId: device.id,
+          price: device?.price
         })
       }
       const deleteDevice = async () => {

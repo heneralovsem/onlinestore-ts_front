@@ -28,6 +28,11 @@
     flex-direction: row;
     gap: 20px;
 }
+.types__column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 .devices__row {
     display: flex;
     flex-direction: row;

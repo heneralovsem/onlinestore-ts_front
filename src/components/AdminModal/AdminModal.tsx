@@ -11,13 +11,14 @@ import { brandsAPI } from "../../services/BrandsService";
 
 interface AdminModalProps {
   modal: boolean;
-  closeModal: () => void;
+  setModal: (name: boolean) => void;
+  
 
 }
 
 const AdminModal: FC<AdminModalProps> = ({
    modal,   
-   closeModal,
+   setModal,
 }) => {
     const [selectedCreation, setSelectedCreation] = useState<string>('')
     const [typeName, setTypeName] = useState<string>("");
@@ -26,7 +27,7 @@ const AdminModal: FC<AdminModalProps> = ({
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("");
   const [deviceName, setDeviceName] = useState<string>("");
-  const [devicePrice, setDevicePrice] = useState<number>(0);
+  const [devicePrice, setDevicePrice] = useState<string>('');
   const [deviceFile, setDeviceFile] = useState(null);
   const [deviceTitle, setDeviceTitle] = useState<string>("");
   const [deviceDesc, setDeviceDesc] = useState<string>("");
@@ -46,11 +47,26 @@ const AdminModal: FC<AdminModalProps> = ({
     const changeInfo = (key:any, value:any, number:any) => {
         setInfo(info.map(i => i.number === number ? {...i, [key]: value} : i))
     }
+    const closeModal = () => {
+      setModal(false)
+      setBrandName('')
+      setTypeName('')
+      setSelectedBrand('')
+      setSelectedType('')
+      setDeviceName('')
+      setDevicePrice('')
+      setSelectedCreation('')
+    }
     const selectBrandHandler = (e: SelectChangeEvent) => {
       setSelectedBrand(e.target.value)
     }
     const selectTypeHandler = (e: SelectChangeEvent) => {
       setSelectedType(e.target.value)
+    }
+    const checkNumber = (event: React.KeyboardEvent<HTMLInputElement>) => {
+       if(Number.isNaN(+event.key) && event.key !== 'Backspace') {
+        event.preventDefault();
+      }
     }
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         //@ts-ignore
@@ -60,11 +76,13 @@ const AdminModal: FC<AdminModalProps> = ({
         await createType({
           name: typeName,
         });
+        closeModal()
       };
       const addBrand = async () => {
         await createBrand({
           name: brandName,
         });
+        closeModal()
       };
       const addDevice = () => {
     const formData = new FormData();
@@ -79,6 +97,7 @@ const AdminModal: FC<AdminModalProps> = ({
     createDevice(formData).then(data => {
       console.log(data)
     });
+    closeModal()
 }
   return (
         <Modal open={modal} onClose={closeModal}>
@@ -153,12 +172,13 @@ const AdminModal: FC<AdminModalProps> = ({
                   className={cl.modal__input}
                   onChange={(event) => setDeviceName(event.target.value)}
                 ></TextField>{" "}
-                <TextField
-                  value={devicePrice}
+                <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} value={devicePrice}
+                  type="text"
                   placeholder="Price..."
                   className={cl.modal__input}
-                  onChange={(event) => setDevicePrice(Number(event.target.value))}
-                />{" "}
+                  onKeyDown={checkNumber}
+                  onChange={(event) => setDevicePrice(event.target.value)}
+                   />
                 <input
                   type="file"
                   placeholder="File..."

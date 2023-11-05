@@ -31,6 +31,7 @@ export interface IBasketDevice {
     id?: number;
     deviceId?: number;
     basketId?:number;
+    price?: number;
 }
 export interface IReview {
     id?: number;

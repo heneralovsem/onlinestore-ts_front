@@ -1,28 +1,24 @@
 import React, { FC, useState } from "react";
 import { Modal, TextField, Button } from "@mui/material";
-import cl from "./BasketModal.module.css";
+import cl from "./Checkout.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 import { IDevice } from "../../types/types";
 import BasketDevice from "../BasketDevice/BasketDevice";
 import { basketAPI } from "../../services/BasketService";
 import { useAppSelector } from "../../hooks/redux";
-import { Link } from "react-router-dom";
 
-interface BasketModalProps {
-  modal: boolean;
-  closeModal: () => void;
-  basketDevices: Array<IDevice>
+interface CheckoutProps {
+  
 }
 
-const BasketModal: FC<BasketModalProps> = ({
-  modal,
-  closeModal,
-  basketDevices
+const Checkout: FC<CheckoutProps> = ({
+  
 }) => {
   const {user} = useAppSelector(state => state.userReducer)
   const [deleteOneBasketDevice] = basketAPI.useDeleteOneBasketDeviceMutation()
   const {data: totalPrice} = basketAPI.useFetchTotalPriceQuery(user.id)
+  const {data: basketDevices} = basketAPI.useFetchAllBasketDevicesQuery(user?.id || 0)
   const clearBasket =  async ()  => {
     //@ts-ignore
    basketDevices.forEach(element => {
@@ -30,24 +26,16 @@ const BasketModal: FC<BasketModalProps> = ({
    });
   }
   return (
-    <Modal open={modal} onClose={closeModal}>
       <div className={cl.modal__container}>
-        <div className={cl.close__icon__wrapper}>
-          <IconButton onClick={closeModal}>
-            <CloseIcon />
-          </IconButton>
-        </div>
+        <div className={cl.devices__wrapper}>
         {basketDevices?.map((basketDevice:any) => (
         <BasketDevice key={basketDevice.id} basketDevice={basketDevice} />
       ))}
-      <p>{totalPrice}</p>
-      <Link to='/checkout'>
-      <Button variant="outlined" onClick={closeModal}>Checkout</Button>
-      </Link>
-      {basketDevices?.length < 1 && <p>You haven't added any devices yet</p>}
       </div>
-    </Modal>
+      <p>{totalPrice}</p>
+      <Button variant="outlined" onClick={clearBasket}>Confirm</Button>
+      </div>
   );
 };
 
-export default BasketModal;
+export default Checkout;
