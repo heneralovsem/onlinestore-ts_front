@@ -41,3 +41,17 @@ export interface IReview {
     text?: string;
     userId?: number;
 }
+export interface IOrderedDevice {
+    id: number;
+    deviceId: number;
+    orderId: number;
+}
+export interface IOrder {
+    id?: number;
+    userName?: string;
+    userPhone?: string;
+    userEmail?: string;
+    totalPrice?: number;
+    devices?: IOrderedDevice[]
+    userId?: number;
+}

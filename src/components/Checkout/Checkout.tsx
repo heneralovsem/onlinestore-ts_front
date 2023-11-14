@@ -10,22 +10,25 @@ import BasketDevice from "../BasketDevice/BasketDevice";
 import { basketAPI } from "../../services/BasketService";
 import { useAppSelector } from "../../hooks/redux";
 import { CheckoutSchema } from "../validation/CheckoutValidation";
+import { orderAPI } from "../../services/OrderService";
 
 interface CheckoutProps {}
 
 const Checkout: FC<CheckoutProps> = ({}) => {
   const { user } = useAppSelector((state) => state.userReducer);
+  const [devices, setDevices] = useState<Array<number>>([])
   const [deleteOneBasketDevice] = basketAPI.useDeleteOneBasketDeviceMutation();
   const { data: totalPrice } = basketAPI.useFetchTotalPriceQuery(user.id);
   const { data: basketDevices } = basketAPI.useFetchAllBasketDevicesQuery(
     user?.id || 0
   );
+  console.log(basketDevices)
+  const [createOrder] = orderAPI.useCreateOrderMutation()
   const clearBasket = async () => {
     //@ts-ignore
     basketDevices.forEach((element) => {
       deleteOneBasketDevice(element.id);
     });
-    const phoneRegExp = /^((\+?3)?8)?0\d{9}$/;
   };
   return (
     <div className={cl.modal__container}>
@@ -44,6 +47,18 @@ const Checkout: FC<CheckoutProps> = ({}) => {
       validateOnBlur
       onSubmit={(values) => {
         console.log(values);
+        const orderDevices = async () => {
+          
+          await createOrder({
+            userName: values.name,
+            userPhone: values.phone,
+            userEmail: values.email,
+            totalPrice: totalPrice,
+            devices: basketDevices,
+            userId: user.id
+          })
+        }
+        orderDevices()
         clearBasket()
 
       }}

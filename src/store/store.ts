@@ -8,6 +8,7 @@ import { brandsAPI } from "../services/BrandsService";
 import { deviceAPI } from "../services/DeviceService";
 import { basketAPI } from "../services/BasketService";
 import { reviewAPI } from "../services/ReviewService";
+import { orderAPI } from "../services/OrderService";
 
 const rootReducer = combineReducers({
     userReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     [deviceAPI.reducerPath]: deviceAPI.reducer,
     [basketAPI.reducerPath]: basketAPI.reducer,
     [reviewAPI.reducerPath]: reviewAPI.reducer,
+    [orderAPI.reducerPath]: orderAPI.reducer
     
 })
 
@@ -27,7 +29,7 @@ export const setupStore = () => {
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => 
             getDefaultMiddleware()
-            .concat(typesAPI.middleware, userAPI.middleware,brandsAPI.middleware, deviceAPI.middleware, basketAPI.middleware, reviewAPI.middleware)
+            .concat(typesAPI.middleware, userAPI.middleware,brandsAPI.middleware, deviceAPI.middleware, basketAPI.middleware, reviewAPI.middleware, orderAPI.middleware)
     })
 }
 export type RootState = ReturnType<typeof rootReducer>

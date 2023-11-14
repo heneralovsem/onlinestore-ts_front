@@ -56,6 +56,9 @@ const Navbar: FC = () => {
           <Link className={cl.menu__link} to="/shop">
             Shop
           </Link>
+          <Link className={cl.menu__link} to="/profile">
+                Profile
+              </Link>
         </div>
         <div onClick={openNav} className={cl.burger__wrapper}>
           <span className={cl.bar}></span>
@@ -68,6 +71,9 @@ const Navbar: FC = () => {
               </Link>
               <Link className={cl.menu__link} to="/shop">
                 Shop
+              </Link>
+              <Link className={cl.menu__link} to="/profile">
+                Profile
               </Link>
             </div>
           ) : null}
