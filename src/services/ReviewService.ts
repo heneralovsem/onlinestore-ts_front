@@ -15,7 +15,7 @@ export const reviewAPI = createApi({
             }),
             providesTags: result => ['Review']
         }),
-        fetchAverageRating: build.query<string, any>({
+        fetchAverageRating: build.query<number, any>({
             query: (deviceId) => ({
                 url: `api/review/rating`,
                 params: {

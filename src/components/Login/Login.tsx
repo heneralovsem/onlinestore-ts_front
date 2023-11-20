@@ -44,10 +44,12 @@ const Login: FC = () => {
     {isLogin? <div className={cl.login__form}>
         <TextField value={email} placeholder="Email..." onChange={(e) => setEmail(e.target.value)}/>
         <TextField value={password} placeholder="Password..." type="password" onChange={(e) => setPassword(e.target.value)}/>
-        <Button onClick={logIn} variant="outlined">
+        <div className={cl.login__row}>
+        <span className={cl.login__text}>Don't have account? <Link className={cl.login__link} to={"/registration"}>Sign up</Link></span>
+        <Button className={cl.login__button} color="success" onClick={logIn} variant="outlined">
           Login
         </Button>
-        <span>Don't have account? <Link to={"/registration"}>Sign up</Link></span>
+        </div>
       </div> : 
       <Formik
       initialValues={{
@@ -120,7 +122,7 @@ const Login: FC = () => {
           <div className={cl.form__button}>
             <Button type="submit" variant="outlined">Submit</Button>
           </div>
-          <span>Don't have account? <Link to={"/login"}>Sign in</Link></span>
+          <span className={cl.login__text}>Don't have account? <Link className={cl.login__link} to={"/login"}>Sign in</Link></span>
         </Form>
       )}
     </Formik>

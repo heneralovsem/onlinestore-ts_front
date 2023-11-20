@@ -23,6 +23,11 @@
     right: 0px;
     top: 0px;
 }
+.shop__wrapper {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0px;
+}
 .brands__row {
     display: flex;
     flex-direction: row;

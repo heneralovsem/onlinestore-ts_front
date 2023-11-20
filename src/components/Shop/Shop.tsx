@@ -60,7 +60,7 @@ const Shop: FC = () => {
   console.log(basketDevices)
   return (
     <div>
-      <div>
+      <div className={cl.shop__wrapper}>
       <div className={cl.shop__flex__row}>
       <div className={cl.types__column}>
       {types?.map((type) => (
