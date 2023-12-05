@@ -8,6 +8,7 @@ import { reviewAPI } from '../../services/ReviewService';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import { useAppSelector } from '../../hooks/redux';
 import { IReview } from '../../types/types';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 
 const DeviceDetails : FC = ({}) => {
@@ -19,7 +20,7 @@ const DeviceDetails : FC = ({}) => {
     const {data: device, error, isLoading} = deviceAPI.useFetchOneDeviceQuery(params.id)
     const {data: reviews} = reviewAPI.useFetchAllReviewsQuery(params.id)
     
-    console.log(device)
+    console.log(device?.info)
     console.log(reviews)
     useEffect(() => {
         const check = () => {
@@ -40,21 +41,40 @@ const DeviceDetails : FC = ({}) => {
 
 
     return (
-        <div>
+        <div className={cl.device__wrapper}>
+            <div className={cl.device__flex__left}>
             <div className={cl.device__img__wrapper}>
             {process.env.REACT_APP_API_URL && <img className={cl.device__img} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
             </div>
-            <p>{device?.name}</p>
+            <h2>Characteristics</h2>
             {device && device.info && <div className={cl.device__info__wrapper}>
-            <span>{device?.info[0].title}</span>
-            <span>{device?.info[0].description}</span>
+            {device.info?.map((info) => (
+                <div>
+                <span>{info.title}</span>
+                <span>{info.description}</span>
+                </div>
+            ))}
+            
             </div>}
-            {!isReviewPresent && <Button variant='outlined' onClick={openReviewModal}>Review</Button>}
+            </div>
+            <div className={cl.device__flex__right}>
+                <div className={cl.device__buying}>
+                <h2>{device?.name}</h2>
+                <div className={cl.price__flex}>
+                   <span className={cl.device__price}>{device?.price} $</span> 
+                    <Button className={cl.buy__button} variant='contained' color='success' startIcon={<ShoppingCartIcon/>}>Buy</Button>
+                    </div>
+                </div>   
             
             {params.id && <ReviewModal modal={reviewModal} deviceId={+params.id} closeModal={closeReviewModal}/> }
+            <div className={cl.device__reviews__wrapper}>
+                <h2>Customer reviews</h2>
             {reviews?.map((review) => (
                 <ReviewItem key={review.id} review={review}/>
             ))}
+            {!isReviewPresent && <Button variant='outlined' onClick={openReviewModal}>Review</Button>}
+            </div>
+            </div>
         </div>
     )
 

@@ -3,10 +3,11 @@ import { IDevice } from '../../types/types';
 import { useNavigate } from 'react-router-dom';
 import cl from './DeviceItem.module.css'
 import { basketAPI } from '../../services/BasketService';
-import { Button, Rating } from '@mui/material';
+import { Button, Rating, IconButton } from '@mui/material';
 import { useAppSelector } from '../../hooks/redux';
 import { deviceAPI } from '../../services/DeviceService';
 import { reviewAPI } from '../../services/ReviewService';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 interface DeviceItemProps {
     device: IDevice
@@ -44,13 +45,17 @@ const DeviceItem : FC<DeviceItemProps> = ({device}) => {
               max={5}
               precision={0.1}
               defaultValue={0}
-              size="large"
+              size="medium"
               value={avgRating ? +avgRating : 0} 
               readOnly
             />
           </div>
+          <div className={cl.price__wrapper}>
            <p>{device.price} $</p> 
-           <Button onClick={addBasketDevice} variant='outlined'>Add to basket</Button>
+           <IconButton onClick={addBasketDevice}>
+                  <ShoppingCartIcon color="success"/>
+            </IconButton>
+            </div>
            <Button onClick={deleteDevice} variant='outlined'>Delete</Button>
         </div>
     )

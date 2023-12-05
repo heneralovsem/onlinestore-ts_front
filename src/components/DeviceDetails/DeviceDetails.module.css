@@ -1,7 +1,52 @@
+.device__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px;
+    width: 80%;
+    margin: 0 auto;
+}
+
 .device__img__wrapper {
-    padding-top: 20px;
+    
+    width: 500px;
 }
 .device__img {
-    width: 300px;
-    height: 200px;
+    width: 500px;
+    min-height: 300px;
+}
+.device__buying {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    border: 0.5px solid #D9DDDC;
+    padding: 20px;
+    min-width: 300px;
+}
+.buy__button {
+    width: 150px;
+}
+.device__price {
+    font-size: 24px;
+}
+.price__flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.device__flex__left {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.device__flex__right {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+.device__reviews__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }

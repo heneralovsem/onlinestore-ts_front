@@ -10,6 +10,9 @@
     width: 600px;
     
 }
+.login__wrapper h2 {
+    text-align: center;
+}
 .login__form {
     display: flex;
     gap: 20px;

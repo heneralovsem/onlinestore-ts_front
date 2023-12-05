@@ -1,0 +1,7 @@
+.review__item__wrapper {
+    border: 0.5px solid #D9DDDC;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

@@ -17,9 +17,8 @@ const ReviewItem : FC<BrandItemProps> = ({review}) => {
         await deleteReview(review.id)
     }
     return (
-        <div>
-            <div>
-            <p>{review.id}</p>
+        <div className={cl.review__item__wrapper}>
+            
             <p>{review.date}</p>
             <div className={cl.rating__wrapper}>
             <Rating
@@ -32,7 +31,6 @@ const ReviewItem : FC<BrandItemProps> = ({review}) => {
             />
           </div>
             <p>{review.text}</p> 
-            </div>
            
            <Button onClick={deleteReviewItem} variant='outlined'>Delete</Button>
         </div>
