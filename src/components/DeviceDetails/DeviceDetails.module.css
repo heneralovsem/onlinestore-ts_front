@@ -21,7 +21,7 @@
     gap: 40px;
     border: 0.5px solid #D9DDDC;
     padding: 20px;
-    min-width: 300px;
+    min-width: 400px;
 }
 .buy__button {
     width: 150px;
@@ -49,4 +49,7 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+}
+.review__button {
+    width: 200px;
 }

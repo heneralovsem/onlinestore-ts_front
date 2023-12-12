@@ -47,15 +47,16 @@ const DeviceDetails : FC = ({}) => {
             {process.env.REACT_APP_API_URL && <img className={cl.device__img} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
             </div>
             <h2>Characteristics</h2>
-            {device && device.info && <div className={cl.device__info__wrapper}>
+            {device && device.info && <table className={cl.device__info__wrapper}>
+                <tbody>
             {device.info?.map((info) => (
-                <div>
-                <span>{info.title}</span>
-                <span>{info.description}</span>
-                </div>
+                <tr>
+                <td>{info.title}</td>
+                <td>{info.description}</td>
+                </tr>
             ))}
-            
-            </div>}
+                </tbody>
+            </table>}
             </div>
             <div className={cl.device__flex__right}>
                 <div className={cl.device__buying}>
@@ -72,7 +73,7 @@ const DeviceDetails : FC = ({}) => {
             {reviews?.map((review) => (
                 <ReviewItem key={review.id} review={review}/>
             ))}
-            {!isReviewPresent && <Button variant='outlined' onClick={openReviewModal}>Review</Button>}
+            {!isReviewPresent && <Button variant='outlined' className={cl.review__button} onClick={openReviewModal}>Review</Button>}
             </div>
             </div>
         </div>
