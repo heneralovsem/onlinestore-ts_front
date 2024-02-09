@@ -31,10 +31,9 @@ const TypeItem : FC<TypeItemProps> = ({type}) => {
     return (
         <div>
             <div className={selectedType.id === type.id ? `${cl.selected__item__wrapper}` : `${cl.item__wrapper}`} onClick={selectType}>
-           <p>{type.id}</p>
            <p>{type.name}</p> 
            </div>
-           <Button onClick={deleteTypeItem} variant='outlined'>Delete</Button>
+           {/* <Button onClick={deleteTypeItem} variant='outlined'>Delete</Button> */}
         </div>
     )
 

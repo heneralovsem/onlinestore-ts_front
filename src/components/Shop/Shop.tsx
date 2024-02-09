@@ -49,6 +49,8 @@ const Shop: FC = () => {
   // };
   
   console.log(user)
+  console.log(selectedBrand)
+  console.log(selectedType)
   // @ts-ignore
   // const addBasketDevice = async () => {
   //   await createBasketDevice({
@@ -61,18 +63,34 @@ const Shop: FC = () => {
   return (
     <div>
       <div className={cl.shop__wrapper}>
+        {selectedBrand.name || selectedType.name ? <div className={cl.applied__filters}>
+        <p>Applied filters:</p>
+        <Button variant="outlined">Clear all</Button>
+       {selectedBrand.name && <Button variant="outlined">{selectedBrand.name}</Button>} 
+       {selectedType.name && <Button variant="outlined">{selectedType.name}</Button>} 
+      </div> : null
+        }
+      
       <div className={cl.shop__flex__row}>
-      <div className={cl.types__column}>
-      {types?.map((type) => (
+      <div className={cl.filters__column}>
+        <div className={cl.types__column__wrapper}>
+        <p>Types {types?.length}</p>
+        <div className={cl.types__column}>
+        {types?.map((type) => (
         <TypeItem key={type.id} type={type} />
       ))}
+        </div>
       </div>
-      <div className={cl.shop__flex__column}>
-      <div className={cl.brands__row}>
-      {brands?.map((brand) => (
+      <div className={cl.brands__column__wrapper}>
+        <p>Brands {brands?.length}</p>
+        <div className={cl.brands__column}>
+        {brands?.map((brand) => (
         <BrandItem key={brand.id} brand={brand} />
       ))}
+        </div>
       </div>
+      </div>
+      <div className={cl.shop__flex__column}>
       <div className={cl.devices__row}>
       {devices?.rows?.map((device: any) => (
         <DeviceItem key={device.id} device={device} />

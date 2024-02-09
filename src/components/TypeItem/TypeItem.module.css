@@ -1,9 +1,14 @@
 .item__wrapper {
     border:1px solid lightgray ;
-    padding-bottom: 20px;
+    padding: 15px 0px;
+    text-align: center;
+    cursor: pointer;
 }
 .selected__item__wrapper {
     border:1px solid lightgray ;
-    padding-bottom: 20px;
-    background-color: lightblue;
+    padding: 15px 0px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    cursor: pointer;
 }

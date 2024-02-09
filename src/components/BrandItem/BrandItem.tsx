@@ -30,11 +30,10 @@ const BrandItem : FC<BrandItemProps> = ({brand}) => {
     return (
         <div>
             <div className={selectedBrand.id === brand.id ? `${cl.selected__item__wrapper}` : `${cl.item__wrapper}`} onClick={selectBrand}>
-            <p>{brand.id}</p>
             <p>{brand.name}</p> 
             </div>
            
-           <Button onClick={deleteBrandItem} variant='outlined'>Delete</Button>
+           {/* <Button onClick={deleteBrandItem} variant='outlined'>Delete</Button> */}
         </div>
     )
 
