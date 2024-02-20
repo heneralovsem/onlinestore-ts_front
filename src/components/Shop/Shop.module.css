@@ -108,6 +108,9 @@
     flex-direction: column;
     gap: 25px;
 }
+.filters__count {
+    color: #a9a9a9;
+}
 @media screen and (max-width:768px) {
     .modal__container {
         width: 300px;

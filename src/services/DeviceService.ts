@@ -11,7 +11,9 @@ export const deviceAPI = createApi({
                 url: `api/device`,
                 params: {
                     typeId: args.typeId,
-                    brandId: args.brandId
+                    brandId: args.brandId,
+                    limit: args.limit,
+                    page: args.page
                 }
             }),
             providesTags: result => ['Device']

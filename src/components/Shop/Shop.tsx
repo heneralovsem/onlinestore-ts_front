@@ -8,27 +8,46 @@ import { deviceAPI } from "../../services/DeviceService";
 import CloseIcon from "@mui/icons-material/Close";
 import cl from "./Shop.module.css";
 import DeviceItem from "../DeviceItem/DeviceItem";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { basketAPI } from "../../services/BasketService";
 import BasketDevice from "../BasketDevice/BasketDevice";
+import { typeSlice } from "../../store/reducers/TypeSlice";
+import { brandSlice } from "../../store/reducers/BrandSlice";
+import { pageSlice } from "../../store/reducers/PageSlice"; 
+import ShopPagination from "../Pagination";
 // import { createDevice } from "../../http/deviceAPI";
 
 const Shop: FC = () => {
+  const limit = 2
   const {user} = useAppSelector(state => state.userReducer)
   const {selectedType} = useAppSelector(state => state.typeReducer)
+  const {setType} = typeSlice.actions
   const {selectedBrand} = useAppSelector(state => state.brandReducer)
+  const {setBrand} = brandSlice.actions
+  const { currentPage } = useAppSelector(state => state.pageReducer)
+  const dispatch = useAppDispatch()
   const { data: types, error, isLoading } = typesAPI.useFetchAllTypesQuery("");
   const [createType, {}] = typesAPI.useCreateTypeMutation();
   const { data: brands } = brandsAPI.useFetchAllBrandsQuery("");
   const [createBrand, {}] = brandsAPI.useCreateBrandMutation();
   //@ts-ignore
-  const { data: devices } = deviceAPI.useFetchAllDevicesQuery({typeId: selectedType.id, brandId: selectedBrand.id});
+  const { data: devices } = deviceAPI.useFetchAllDevicesQuery({typeId: selectedType.id, brandId: selectedBrand.id, limit: limit, page: currentPage});
   console.log(devices);
   //@ts-ignore
   const {data: basketDevices} = basketAPI.useFetchAllBasketDevicesQuery(user.id)
   // const [deleteAllBasketDevices, {}] = basketAPI.useDeleteAllBasketDevicesMutation()
   const [deleteOneBasketDevice, {}] = basketAPI.useDeleteOneBasketDeviceMutation()
   const [createDevice, {}] = deviceAPI.useCreateDeviceMutation()
+  const clearAllFilters = () => {
+    dispatch(setType({}))
+    dispatch(setBrand({}))
+  }
+  const clearBrandFilter = () => {
+    dispatch(setBrand({}))
+  }
+  const clearTypeFilter = () => {
+    dispatch(setType({}))
+  }
   // const addDevice = () => {
   //   const formData = new FormData();
   //   formData.append("name", deviceName);
@@ -60,21 +79,22 @@ const Shop: FC = () => {
   //   })
   // }
   console.log(basketDevices)
+  
   return (
     <div>
       <div className={cl.shop__wrapper}>
         {selectedBrand.name || selectedType.name ? <div className={cl.applied__filters}>
         <p>Applied filters:</p>
-        <Button variant="outlined">Clear all</Button>
-       {selectedBrand.name && <Button variant="outlined">{selectedBrand.name}</Button>} 
-       {selectedType.name && <Button variant="outlined">{selectedType.name}</Button>} 
+        <Button variant="outlined" onClick={clearAllFilters}>Clear all</Button>
+       {selectedBrand.name && <Button variant="outlined" onClick={clearBrandFilter}>{selectedBrand.name}</Button>} 
+       {selectedType.name && <Button variant="outlined" onClick={clearTypeFilter}>{selectedType.name}</Button>} 
       </div> : null
         }
       
       <div className={cl.shop__flex__row}>
       <div className={cl.filters__column}>
         <div className={cl.types__column__wrapper}>
-        <p>Types {types?.length}</p>
+        <p>Types <span className={cl.filters__count}>{types?.length}</span></p>
         <div className={cl.types__column}>
         {types?.map((type) => (
         <TypeItem key={type.id} type={type} />
@@ -82,7 +102,7 @@ const Shop: FC = () => {
         </div>
       </div>
       <div className={cl.brands__column__wrapper}>
-        <p>Brands {brands?.length}</p>
+        <p>Brands <span className={cl.filters__count}> {brands?.length}</span></p>
         <div className={cl.brands__column}>
         {brands?.map((brand) => (
         <BrandItem key={brand.id} brand={brand} />
@@ -96,11 +116,14 @@ const Shop: FC = () => {
         <DeviceItem key={device.id} device={device} />
       ))}
       </div>
+      <ShopPagination limit={limit} devicesCount={7}/>
       </div>
       </div>
       </div>
       <div>
+        
       </div>
+      
     </div>
   );
 };
