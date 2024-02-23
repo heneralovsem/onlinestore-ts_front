@@ -53,3 +53,12 @@
 .review__button {
     width: 200px;
 }
+.device__info__wrapper {
+    background-color: coral;
+    padding: 15px 20px 0px 20px;
+    
+    
+}
+.device__info__wrapper td {
+    padding-bottom: 15px;
+}

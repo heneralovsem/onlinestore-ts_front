@@ -14,7 +14,7 @@ import BasketDevice from "../BasketDevice/BasketDevice";
 import { typeSlice } from "../../store/reducers/TypeSlice";
 import { brandSlice } from "../../store/reducers/BrandSlice";
 import { pageSlice } from "../../store/reducers/PageSlice"; 
-import ShopPagination from "../Pagination";
+import ShopPagination from "../Pagination/Pagination";
 // import { createDevice } from "../../http/deviceAPI";
 
 const Shop: FC = () => {
@@ -116,9 +116,11 @@ const Shop: FC = () => {
         <DeviceItem key={device.id} device={device} />
       ))}
       </div>
+      
+      </div>
+      
+      </div>
       <ShopPagination limit={limit} devicesCount={7}/>
-      </div>
-      </div>
       </div>
       <div>
         

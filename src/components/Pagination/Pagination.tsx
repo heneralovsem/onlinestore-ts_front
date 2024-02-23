@@ -2,9 +2,9 @@ import React, {ChangeEvent, FC} from 'react'
 
 import Button from '@mui/material/Button';
 import { Pagination } from '@mui/material';
-import { pageSlice } from '../store/reducers/PageSlice'; 
-import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import cl from './TypeItem.module.css'
+import { pageSlice } from '../../store/reducers/PageSlice'; 
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import cl from './Pagination.module.css'
 
 
 interface PaginationProps {
@@ -25,7 +25,7 @@ const ShopPagination : FC<PaginationProps> = ({devicesCount, limit}) => {
     console.log(currentPage)
 
     return (
-        <div>
+        <div className={cl.pagination__wrapper}>
             <Pagination count={totalPages} page={currentPage} onChange={handleChange} />
         </div>
     )
