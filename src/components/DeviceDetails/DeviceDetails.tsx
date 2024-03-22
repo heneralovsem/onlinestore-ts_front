@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import { useParams } from 'react-router-dom';
 import { deviceAPI } from '../../services/DeviceService';
 import  cl from './DeviceDetails.module.css'
@@ -19,7 +19,7 @@ const DeviceDetails : FC = ({}) => {
     const {user} = useAppSelector(state => state.userReducer)
     const {data: device, error, isLoading} = deviceAPI.useFetchOneDeviceQuery(params.id)
     const {data: reviews} = reviewAPI.useFetchAllReviewsQuery(params.id)
-    
+    const myReviewRef = useRef<HTMLDivElement | null>(null)
     console.log(device?.info)
     console.log(reviews)
     useEffect(() => {
@@ -38,6 +38,10 @@ const DeviceDetails : FC = ({}) => {
     const closeReviewModal = () => {
         setReviewModal(false)
     }
+    const scrollToMyReview = () => {
+        myReviewRef.current?.scrollIntoView({block: 'center'})
+        console.log(myReviewRef.current)
+    }
 
 
     return (
@@ -50,7 +54,7 @@ const DeviceDetails : FC = ({}) => {
             {device && device.info && <table className={cl.device__info__wrapper}>
                 <tbody>
             {device.info?.map((info) => (
-                <tr>
+                <tr key={device.id}>
                 <td>{info.title}</td>
                 <td>{info.description}</td>
                 </tr>
@@ -70,10 +74,15 @@ const DeviceDetails : FC = ({}) => {
             {params.id && <ReviewModal modal={reviewModal} deviceId={+params.id} closeModal={closeReviewModal}/> }
             <div className={cl.device__reviews__wrapper}>
                 <h2>Customer reviews</h2>
-            {reviews?.map((review) => (
-                <ReviewItem key={review.id} review={review}/>
-            ))}
-            {!isReviewPresent && <Button variant='outlined' className={cl.review__button} onClick={openReviewModal}>Review</Button>}
+                {!isReviewPresent ? <Button variant='outlined' className={cl.review__button} onClick={openReviewModal}>Review</Button> : <Button variant='outlined' className={cl.review__button} onClick={scrollToMyReview}>See my review</Button> }
+            {reviews?.map((review) => {
+                const refProps =
+                 user.id === review.userId ? {ref: myReviewRef } : {}
+                 return (
+                <ReviewItem key={review.id} review={review} {...refProps} />
+                 )
+})}
+            
             </div>
             </div>
         </div>

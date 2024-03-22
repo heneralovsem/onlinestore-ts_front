@@ -26,7 +26,8 @@ const ShopPagination : FC<PaginationProps> = ({devicesCount, limit}) => {
 
     return (
         <div className={cl.pagination__wrapper}>
-            <Pagination count={totalPages} page={currentPage} onChange={handleChange} />
+            {devicesCount > limit && <Pagination count={totalPages} page={currentPage} onChange={handleChange} /> }
+            
         </div>
     )
 

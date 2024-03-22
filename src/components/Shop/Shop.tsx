@@ -18,7 +18,7 @@ import ShopPagination from "../Pagination/Pagination";
 // import { createDevice } from "../../http/deviceAPI";
 
 const Shop: FC = () => {
-  const limit = 2
+  const limit = 5
   const {user} = useAppSelector(state => state.userReducer)
   const {selectedType} = useAppSelector(state => state.typeReducer)
   const {setType} = typeSlice.actions
@@ -81,7 +81,7 @@ const Shop: FC = () => {
   console.log(basketDevices)
   
   return (
-    <div>
+    
       <div className={cl.shop__wrapper}>
         {selectedBrand.name || selectedType.name ? <div className={cl.applied__filters}>
         <p>Applied filters:</p>
@@ -110,23 +110,23 @@ const Shop: FC = () => {
         </div>
       </div>
       </div>
+      
       <div className={cl.shop__flex__column}>
       <div className={cl.devices__row}>
       {devices?.rows?.map((device: any) => (
         <DeviceItem key={device.id} device={device} />
       ))}
       </div>
-      
+      <ShopPagination limit={limit} devicesCount={devices?.count}/>
       </div>
       
+      
       </div>
-      <ShopPagination limit={limit} devicesCount={7}/>
-      </div>
-      <div>
-        
       </div>
       
-    </div>
+      
+      
+      
   );
 };
 

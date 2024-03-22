@@ -1,5 +1,10 @@
 .pagination__wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
     display: flex;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
+    
+    
 }

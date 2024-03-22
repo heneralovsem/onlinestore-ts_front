@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, forwardRef} from 'react'
 import { IReview } from '../../types/types';
 import {Button, Rating} from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -6,18 +6,20 @@ import { brandSlice } from '../../store/reducers/BrandSlice';
 import cl from './ReviewItem.module.css'
 import { reviewAPI } from '../../services/ReviewService';
 
-interface BrandItemProps {
+interface ReviewItemProps {
     review: IReview
+    ref: HTMLDivElement | null
 }
 
-const ReviewItem : FC<BrandItemProps> = ({review}) => {
+const ReviewItem :  React.ForwardRefRenderFunction<HTMLDivElement , ReviewItemProps> = ({review}, ref) => {
     const [deleteReview] = reviewAPI.useDeleteReviewMutation()
     
     const deleteReviewItem = async () => {
         await deleteReview(review.id)
     }
+    console.log(ref)
     return (
-        <div className={cl.review__item__wrapper}>
+        <div ref={ref} className={cl.review__item__wrapper}>
             
             <p>{review.date}</p>
             <div className={cl.rating__wrapper}>
@@ -38,4 +40,4 @@ const ReviewItem : FC<BrandItemProps> = ({review}) => {
 
 }
 
-export default ReviewItem;
+export default forwardRef(ReviewItem);
