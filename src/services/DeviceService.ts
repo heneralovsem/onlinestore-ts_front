@@ -13,7 +13,8 @@ export const deviceAPI = createApi({
                     typeId: args.typeId,
                     brandId: args.brandId,
                     limit: args.limit,
-                    page: args.page
+                    page: args.page,
+                    sorting: args.sorting
                 }
             }),
             providesTags: result => ['Device']

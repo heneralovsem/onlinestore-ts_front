@@ -109,6 +109,18 @@
 .filters__count {
     color: #a9a9a9;
 }
+.filters__bar {
+    padding: 20px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.applied__sorting {
+   margin-left: auto;
+}
+.sort__select {
+    width: 200px;
+}
 @media screen and (max-width:768px) {
     .modal__container {
         width: 300px;

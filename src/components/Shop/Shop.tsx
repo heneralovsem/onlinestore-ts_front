@@ -1,7 +1,17 @@
 import React, { FC, useState } from "react";
 import { typesAPI } from "../../services/TypesService";
 import TypeItem from "../TypeItem/TypeItem";
-import { TextField, Button, Modal, IconButton, FormControl, MenuItem, Select, InputLabel, SelectChangeEvent } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Modal,
+  IconButton,
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+  SelectChangeEvent,
+} from "@mui/material";
 import { brandsAPI } from "../../services/BrandsService";
 import BrandItem from "../BrandItem/BrandItem";
 import { deviceAPI } from "../../services/DeviceService";
@@ -13,41 +23,56 @@ import { basketAPI } from "../../services/BasketService";
 import BasketDevice from "../BasketDevice/BasketDevice";
 import { typeSlice } from "../../store/reducers/TypeSlice";
 import { brandSlice } from "../../store/reducers/BrandSlice";
-import { pageSlice } from "../../store/reducers/PageSlice"; 
+import { pageSlice } from "../../store/reducers/PageSlice";
 import ShopPagination from "../Pagination/Pagination";
+import { IDevice } from "../../types/types";
 // import { createDevice } from "../../http/deviceAPI";
 
 const Shop: FC = () => {
-  const limit = 5
-  const {user} = useAppSelector(state => state.userReducer)
-  const {selectedType} = useAppSelector(state => state.typeReducer)
-  const {setType} = typeSlice.actions
-  const {selectedBrand} = useAppSelector(state => state.brandReducer)
-  const {setBrand} = brandSlice.actions
-  const { currentPage } = useAppSelector(state => state.pageReducer)
-  const dispatch = useAppDispatch()
+  const limit = 5;
+  const { user } = useAppSelector((state) => state.userReducer);
+  const { selectedType } = useAppSelector((state) => state.typeReducer);
+  const { setType } = typeSlice.actions;
+  const { selectedBrand } = useAppSelector((state) => state.brandReducer);
+  const { setBrand } = brandSlice.actions;
+  const { currentPage } = useAppSelector((state) => state.pageReducer);
+  const [sortingType, setSortingType] = useState("createdAt");
+  const dispatch = useAppDispatch();
   const { data: types, error, isLoading } = typesAPI.useFetchAllTypesQuery("");
   const [createType, {}] = typesAPI.useCreateTypeMutation();
   const { data: brands } = brandsAPI.useFetchAllBrandsQuery("");
   const [createBrand, {}] = brandsAPI.useCreateBrandMutation();
   //@ts-ignore
-  const { data: devices } = deviceAPI.useFetchAllDevicesQuery({typeId: selectedType.id, brandId: selectedBrand.id, limit: limit, page: currentPage});
+  const { data: devices } = deviceAPI.useFetchAllDevicesQuery({
+    typeId: selectedType.id,
+    brandId: selectedBrand.id,
+    limit: limit,
+    page: currentPage,
+    sorting: sortingType
+  });
   console.log(devices);
   //@ts-ignore
-  const {data: basketDevices} = basketAPI.useFetchAllBasketDevicesQuery(user.id)
+  const { data: basketDevices } = basketAPI.useFetchAllBasketDevicesQuery(
+    user.id
+  );
   // const [deleteAllBasketDevices, {}] = basketAPI.useDeleteAllBasketDevicesMutation()
-  const [deleteOneBasketDevice, {}] = basketAPI.useDeleteOneBasketDeviceMutation()
-  const [createDevice, {}] = deviceAPI.useCreateDeviceMutation()
+  const [deleteOneBasketDevice, {}] =
+    basketAPI.useDeleteOneBasketDeviceMutation();
+  const [createDevice, {}] = deviceAPI.useCreateDeviceMutation();
   const clearAllFilters = () => {
-    dispatch(setType({}))
-    dispatch(setBrand({}))
-  }
+    dispatch(setType({}));
+    dispatch(setBrand({}));
+  };
   const clearBrandFilter = () => {
-    dispatch(setBrand({}))
-  }
+    dispatch(setBrand({}));
+  };
   const clearTypeFilter = () => {
-    dispatch(setType({}))
-  }
+    dispatch(setType({}));
+  };
+  const selectHandler = (e: SelectChangeEvent) => {
+    setSortingType(e.target.value);
+    console.log(sortingType)
+  };
   // const addDevice = () => {
   //   const formData = new FormData();
   //   formData.append("name", deviceName);
@@ -66,67 +91,95 @@ const Shop: FC = () => {
   //   // console.log(JSON.parse(test))
 
   // };
-  
-  console.log(user)
-  console.log(selectedBrand)
-  console.log(selectedType)
+
+  console.log(user);
+  console.log(selectedBrand);
+  console.log(selectedType);
   // @ts-ignore
   // const addBasketDevice = async () => {
   //   await createBasketDevice({
   //     //@ts-ignore
   //     basketId: user.id,
-  //     deviceId: 
+  //     deviceId:
   //   })
   // }
-  console.log(basketDevices)
-  
+  console.log(basketDevices);
+  console.log(devices?.rows?.slice()?.sort((a : IDevice, b:IDevice) =>b.rating! - a.rating! ))
   return (
-    
-      <div className={cl.shop__wrapper}>
-        {selectedBrand.name || selectedType.name ? <div className={cl.applied__filters}>
-        <p>Applied filters:</p>
-        <Button variant="outlined" onClick={clearAllFilters}>Clear all</Button>
-       {selectedBrand.name && <Button variant="outlined" onClick={clearBrandFilter}>{selectedBrand.name}</Button>} 
-       {selectedType.name && <Button variant="outlined" onClick={clearTypeFilter}>{selectedType.name}</Button>} 
-      </div> : null
-        }
-      
+    <div className={cl.shop__wrapper}>
+      <div className={cl.filters__bar}>
+        {selectedBrand.name || selectedType.name ? (
+          <div className={cl.applied__filters}>
+            <p>Applied filters:</p>
+            <Button variant="outlined" onClick={clearAllFilters}>
+              Clear all
+            </Button>
+            {selectedBrand.name && (
+              <Button variant="outlined" onClick={clearBrandFilter}>
+                {selectedBrand.name}
+              </Button>
+            )}
+            {selectedType.name && (
+              <Button variant="outlined" onClick={clearTypeFilter}>
+                {selectedType.name}
+              </Button>
+            )}
+          </div>
+        ) : null}
+        <div className={cl.applied__sorting}>
+          <FormControl size="small">
+            <InputLabel id="sort-select-label">Sort by</InputLabel>
+            <Select
+              className={cl.sort__select}
+              labelId="sort-select-label"
+              value={sortingType}
+              label="Sort by"
+              size="small"
+              onChange={selectHandler}
+            >
+              <MenuItem value={"rating"}>Rating</MenuItem>
+              <MenuItem value={"createdAt"}>Date</MenuItem>
+              <MenuItem value={"price"}>Price</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+      </div>
       <div className={cl.shop__flex__row}>
-      <div className={cl.filters__column}>
-        <div className={cl.types__column__wrapper}>
-        <p>Types <span className={cl.filters__count}>{types?.length}</span></p>
-        <div className={cl.types__column}>
-        {types?.map((type) => (
-        <TypeItem key={type.id} type={type} />
-      ))}
+        <div className={cl.filters__column}>
+          <div className={cl.types__column__wrapper}>
+            <p>
+              Types <span className={cl.filters__count}>{types?.length}</span>
+            </p>
+            <div className={cl.types__column}>
+              {types?.map((type) => (
+                <TypeItem key={type.id} type={type} />
+              ))}
+            </div>
+          </div>
+          <div className={cl.brands__column__wrapper}>
+            <p>
+              Brands{" "}
+              <span className={cl.filters__count}> {brands?.length}</span>
+            </p>
+            <div className={cl.brands__column}>
+              {brands?.map((brand) => (
+                <BrandItem key={brand.id} brand={brand} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className={cl.shop__flex__column}>
+            <div className={cl.devices__row}>
+              {devices?.rows?.map((device: any) => (
+                <DeviceItem key={device.id} device={device} />
+              ))}
+            </div>
+          
+          <ShopPagination limit={limit} devicesCount={devices?.count} />
         </div>
       </div>
-      <div className={cl.brands__column__wrapper}>
-        <p>Brands <span className={cl.filters__count}> {brands?.length}</span></p>
-        <div className={cl.brands__column}>
-        {brands?.map((brand) => (
-        <BrandItem key={brand.id} brand={brand} />
-      ))}
-        </div>
-      </div>
-      </div>
-      
-      <div className={cl.shop__flex__column}>
-      <div className={cl.devices__row}>
-      {devices?.rows?.map((device: any) => (
-        <DeviceItem key={device.id} device={device} />
-      ))}
-      </div>
-      <ShopPagination limit={limit} devicesCount={devices?.count}/>
-      </div>
-      
-      
-      </div>
-      </div>
-      
-      
-      
-      
+    </div>
   );
 };
 
