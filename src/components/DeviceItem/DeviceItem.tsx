@@ -34,6 +34,7 @@ const DeviceItem : FC<DeviceItemProps> = ({device}) => {
         await deleteOneDevice(device.id)
       }
       console.log(device)
+      console.log(avgRating)
     return (
         <div className={cl.device__item__wrapper} >
           <div onClick={getId}>

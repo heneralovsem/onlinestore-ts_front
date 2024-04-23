@@ -54,7 +54,7 @@ const DeviceDetails : FC = ({}) => {
             {device && device.info && <table className={cl.device__info__wrapper}>
                 <tbody>
             {device.info?.map((info) => (
-                <tr key={device.id}>
+                <tr key={info.title}>
                 <td>{info.title}</td>
                 <td>{info.description}</td>
                 </tr>
@@ -71,7 +71,7 @@ const DeviceDetails : FC = ({}) => {
                     </div>
                 </div>   
             
-            {params.id && <ReviewModal modal={reviewModal} deviceId={+params.id} closeModal={closeReviewModal}/> }
+            {params.id && device && <ReviewModal modal={reviewModal} deviceId={+params.id} device={device} closeModal={closeReviewModal}/> }
             <div className={cl.device__reviews__wrapper}>
                 <h2>Customer reviews</h2>
                 {!isReviewPresent ? <Button variant='outlined' className={cl.review__button} onClick={openReviewModal}>Review</Button> : <Button variant='outlined' className={cl.review__button} onClick={scrollToMyReview}>See my review</Button> }

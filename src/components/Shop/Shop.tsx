@@ -95,6 +95,8 @@ const Shop: FC = () => {
   console.log(user);
   console.log(selectedBrand);
   console.log(selectedType);
+  
+  
   // @ts-ignore
   // const addBasketDevice = async () => {
   //   await createBasketDevice({

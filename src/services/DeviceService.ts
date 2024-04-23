@@ -33,6 +33,14 @@ export const deviceAPI = createApi({
             }),
             invalidatesTags: ['Device']
         }),
+        updateDeviceRating: build.mutation({
+            query: (device) => ({
+                url: `api/device/${device.id}`,
+                method: 'PUT',
+                body: device
+            }),
+            invalidatesTags: ['Device']
+        }),
         deleteOneDevice: build.mutation({
             query: (id) => ({
                 url: `api/device/${id}`,

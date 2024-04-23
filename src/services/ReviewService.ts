@@ -24,6 +24,15 @@ export const reviewAPI = createApi({
             }),
             providesTags: result => ['Review']
         }),
+        // FetchDeviceRatings: build.query<any, any>({
+        //     query: (deviceId) => ({
+        //         url: `api/review`,
+        //         params: {
+        //             deviceId: deviceId
+        //         }
+        //     }),
+        //     providesTags: result => ['Review']
+        // }),
         createReview: build.mutation<IReview, IReview>({
             query: (review) => ({
                 url: `api/review`,
