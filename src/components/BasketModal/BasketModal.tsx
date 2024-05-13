@@ -40,10 +40,13 @@ const BasketModal: FC<BasketModalProps> = ({
         {basketDevices?.map((basketDevice:any) => (
         <BasketDevice key={basketDevice.id} basketDevice={basketDevice} />
       ))}
-      <p>{totalPrice}</p>
+      <div className={cl.total__price__wrapper}>
+      <p className={cl.total__price}>{totalPrice}$</p>
       <Link to='/checkout'>
-      <Button variant="outlined" onClick={closeModal}>Checkout</Button>
+      <Button variant="contained" color="success" onClick={closeModal}>Checkout</Button>
       </Link>
+      </div>
+      
       {basketDevices?.length < 1 && <p>You haven't added any devices yet</p>}
       </div>
     </Modal>

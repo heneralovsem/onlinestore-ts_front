@@ -54,11 +54,15 @@
     width: 200px;
 }
 .device__info__wrapper {
-    background-color: coral;
+    background-color: #cceffb;
     padding: 15px 20px 0px 20px;
     
     
 }
+.device__info__wrapper tr {
+    display: flex;
+    justify-content: space-between;
+}
 .device__info__wrapper td {
-    padding-bottom: 15px;
+    padding-bottom: 20px;
 }

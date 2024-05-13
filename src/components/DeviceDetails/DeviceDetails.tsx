@@ -56,6 +56,7 @@ const DeviceDetails : FC = ({}) => {
             {device.info?.map((info) => (
                 <tr key={info.title}>
                 <td>{info.title}</td>
+                <td></td>
                 <td>{info.description}</td>
                 </tr>
             ))}

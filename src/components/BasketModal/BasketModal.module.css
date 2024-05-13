@@ -6,11 +6,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: 500px;
     display: flex;
     gap: 20px;
     flex-direction: column;
-    text-align: center;
     max-height: 75%;
     overflow-y: auto;
 }
@@ -33,4 +32,15 @@
         width: 280px;
         padding: 40px 10px;
     }
+}
+.total__price__wrapper {
+    display: flex;
+    align-self: flex-end;
+    gap: 15px;
+    border: 1px solid green;
+    padding: 15px;
+}
+.total__price {
+    align-content: center;
+    font-size: 24px;
 }
