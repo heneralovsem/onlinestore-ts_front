@@ -31,13 +31,9 @@ const Checkout: FC<CheckoutProps> = ({}) => {
     });
   };
   return (
-    <div className={cl.modal__container}>
-    <div className={cl.devices__wrapper}>
-    {basketDevices?.map((basketDevice:any) => (
-    <BasketDevice key={basketDevice.id} basketDevice={basketDevice} />
-  ))}
-  </div>
-  <p>{totalPrice}</p>
+    <div className={cl.checkout__wrapper}>
+      <h1>Checkout</h1>
+      <h2>Your contacts</h2>
   <Formik
       initialValues={{
         name: '',
@@ -74,15 +70,19 @@ const Checkout: FC<CheckoutProps> = ({}) => {
         dirty,
         setFieldValue,
       }) => (
-        <Form onSubmit={handleSubmit} className={cl.signUp__form}>
-          <div className={cl.form__userinfo}>
-            <div className={cl.form__input}>
+        <Form onSubmit={handleSubmit} className={cl.contacts__form}>
+          <div className={cl.form__wrapper}>
+          <main className={cl.checkout__main}>
+        
+       
+            <div className={cl.form__input__wrapper}>
               <TextField
                 id='outlined-basic'
                 label='Name'
                 variant='outlined'
                 type='text'
                 name='name'
+                className={cl.form__input}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.name}
@@ -92,13 +92,14 @@ const Checkout: FC<CheckoutProps> = ({}) => {
               )}
             </div>
 
-            <div className={cl.form__input}>
+            <div className={cl.form__input__wrapper}>
               <TextField
                 id='outlined-basic'
                 label='Email'
                 variant='outlined'
                 type='email'
                 name='email'
+                className={cl.form__input}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.email}
@@ -108,13 +109,14 @@ const Checkout: FC<CheckoutProps> = ({}) => {
               )}
             </div>
 
-            <div className={cl.form__input}>
+            <div className={cl.form__input__wrapper}>
               <TextField
                 id='outlined-basic'
                 label='Phone'
                 variant='outlined'
                 type='tel'
                 name='phone'
+                className={cl.form__input}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.phone}
@@ -123,9 +125,17 @@ const Checkout: FC<CheckoutProps> = ({}) => {
                 <p className={cl.form__error}>{errors.phone}</p>
               )}
             </div>
-          </div>
-          <div className={cl.form__button}>
-            <Button type="submit" variant="outlined">Submit</Button>
+            <div className={cl.devices__wrapper}>
+    {basketDevices?.map((basketDevice:any) => (
+    <BasketDevice key={basketDevice.id} basketDevice={basketDevice} />
+  ))}
+  </div>
+          </main>
+          <aside className={cl.checkout__aside}>
+            <h2>Total</h2>
+            <p>{basketDevices?.length} devices for {totalPrice}</p>
+            <Button color="success" type="submit" variant="contained">Submit</Button>
+          </aside>
           </div>
         </Form>
       )}
