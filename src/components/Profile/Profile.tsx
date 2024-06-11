@@ -17,7 +17,7 @@ const Profile : FC<BrandItemProps> = () => {
     console.log(orders)
     return (
         <div>
-            {orders ? <div>
+            {orders && orders.length > 0 ? <div>
             {orders?.map((order) => (
                 <OrderItem key={order.id} order={order}/>
             ))}

@@ -1,7 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Modal, TextField, Button } from "@mui/material";
+import { Modal, TextField, Button, Alert, AlertTitle } from "@mui/material";
 import cl from "./Checkout.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
@@ -11,12 +11,17 @@ import { basketAPI } from "../../services/BasketService";
 import { useAppSelector } from "../../hooks/redux";
 import { CheckoutSchema } from "../validation/CheckoutValidation";
 import { orderAPI } from "../../services/OrderService";
+import { CSSTransition } from "react-transition-group";
 
 interface CheckoutProps {}
 
 const Checkout: FC<CheckoutProps> = ({}) => {
   const { user } = useAppSelector((state) => state.userReducer);
   const [devices, setDevices] = useState<Array<number>>([])
+  const [isShowPopUp, setIsShowPopUp] = useState<boolean>(false)
+  const [showButton, setShowButton] = useState<boolean>(true)
+  const noderef = useRef<HTMLDivElement | null>(null)
+  console.log(noderef)
   const [deleteOneBasketDevice] = basketAPI.useDeleteOneBasketDeviceMutation();
   const { data: totalPrice } = basketAPI.useFetchTotalPriceQuery(user.id);
   const { data: basketDevices } = basketAPI.useFetchAllBasketDevicesQuery(
@@ -30,6 +35,12 @@ const Checkout: FC<CheckoutProps> = ({}) => {
       deleteOneBasketDevice(element.id);
     });
   };
+  const showPopUp = () => {
+    setIsShowPopUp(true)
+    // setTimeout(() => {
+    //   setIsShowPopUp(false)
+    // }, 7000 );
+  }
   return (
     <div className={cl.checkout__wrapper}>
       <h1>Checkout</h1>
@@ -55,6 +66,7 @@ const Checkout: FC<CheckoutProps> = ({}) => {
           })
         }
         orderDevices()
+        showPopUp()
         clearBasket()
 
       }}
@@ -125,21 +137,54 @@ const Checkout: FC<CheckoutProps> = ({}) => {
                 <p className={cl.form__error}>{errors.phone}</p>
               )}
             </div>
-            <div className={cl.devices__wrapper}>
+          {basketDevices && basketDevices.length > 0 && <div className={cl.devices__wrapper}>
     {basketDevices?.map((basketDevice:any) => (
     <BasketDevice key={basketDevice.id} basketDevice={basketDevice} />
   ))}
-  </div>
+  </div>}  
           </main>
           <aside className={cl.checkout__aside}>
             <h2>Total</h2>
-            <p>{basketDevices?.length} devices for {totalPrice}</p>
+            <p>{basketDevices?.length} devices for {totalPrice}$</p>
             <Button color="success" type="submit" variant="contained">Submit</Button>
           </aside>
           </div>
         </Form>
       )}
     </Formik>
+    <button onClick={showPopUp}>Show</button> 
+   {/* <CSSTransition
+        in={isShowPopUp}
+        nodeRef={noderef}
+        timeout={1000}
+        classNames="alert"
+        unmountOnExit
+        onEnter={() => setShowButton(false)}
+        onExited={() => setShowButton(true)}
+      >
+        <Alert
+          ref={noderef}
+        >
+          <AlertTitle>
+            Animated alert message
+          </AlertTitle>
+          <p>
+            This alert message is being transitioned in and
+            out of the DOM.
+          </p>
+          <Button
+            
+            onClick={() => setIsShowPopUp(false)}
+          >
+            Close
+          </Button>
+        </Alert>
+      </CSSTransition> */}
+    <button onClick={() => setIsShowPopUp(false)}>close</button>
+    
+     <CSSTransition in={isShowPopUp} nodeRef={noderef} timeout={1000} unmountOnExit classNames='popup'><div ref={noderef} >
+      Success
+    </div></CSSTransition> 
   </div>
   );
 };

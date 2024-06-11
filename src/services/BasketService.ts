@@ -1,4 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react'
+import { IBasketDevice } from '../types/types'
 
 export const basketAPI = createApi({
     reducerPath: 'basketAPI',
