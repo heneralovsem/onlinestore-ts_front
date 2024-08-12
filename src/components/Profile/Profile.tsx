@@ -2,21 +2,21 @@ import React, {FC} from 'react'
 import { IBrand } from '../../types/types';
 import Button from '@mui/material/Button';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import cl from './BrandItem.module.css'
+import cl from './Profile.module.css'
 import { orderAPI } from '../../services/OrderService';
 import OrderItem from '../OrderItem/OrderItem';
 
-interface BrandItemProps {
+interface ProfileProps {
    
 }
 
-const Profile : FC<BrandItemProps> = () => {
+const Profile : FC<ProfileProps> = () => {
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.userReducer)
     const {data: orders} = orderAPI.useFetchAllOrdersQuery(user.id)
     console.log(orders)
     return (
-        <div>
+        <div className={cl.profile__wrapper}>
             {orders && orders.length > 0 ? <div>
             {orders?.map((order) => (
                 <OrderItem key={order.id} order={order}/>

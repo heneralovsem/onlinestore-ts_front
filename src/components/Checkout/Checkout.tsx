@@ -1,34 +1,42 @@
 import React, { FC, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Modal, TextField, Button, Alert, AlertTitle } from "@mui/material";
+import { Modal, TextField, Button, Alert, AlertTitle, Slide, Fade } from "@mui/material";
 import cl from "./Checkout.module.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 import { IDevice } from "../../types/types";
 import BasketDevice from "../BasketDevice/BasketDevice";
 import { basketAPI } from "../../services/BasketService";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppSelector, useAppDispatch } from "../../hooks/redux";
+import { popUpSlice } from "../../store/reducers/PopUpSlice";
 import { CheckoutSchema } from "../validation/CheckoutValidation";
 import { orderAPI } from "../../services/OrderService";
 import { CSSTransition } from "react-transition-group";
+import { Link } from "react-router-dom";
+
 
 interface CheckoutProps {}
 
 const Checkout: FC<CheckoutProps> = ({}) => {
   const { user } = useAppSelector((state) => state.userReducer);
+  const dispatch = useAppDispatch()
+  const {setPopUpVisibility} = popUpSlice.actions
+  const { popUpVisibility } = useAppSelector((state) => state.popUpReducer);
   const [devices, setDevices] = useState<Array<number>>([])
   const [isShowPopUp, setIsShowPopUp] = useState<boolean>(false)
   const [showButton, setShowButton] = useState<boolean>(true)
   const noderef = useRef<HTMLDivElement | null>(null)
   console.log(noderef)
+  const navigate = useNavigate()
   const [deleteOneBasketDevice] = basketAPI.useDeleteOneBasketDeviceMutation();
   const { data: totalPrice } = basketAPI.useFetchTotalPriceQuery(user.id);
   const { data: basketDevices } = basketAPI.useFetchAllBasketDevicesQuery(
     user?.id || 0
   );
   console.log(basketDevices)
-  const [createOrder] = orderAPI.useCreateOrderMutation()
+  const [createOrder, {error}] = orderAPI.useCreateOrderMutation()
   const clearBasket = async () => {
     //@ts-ignore
     basketDevices.forEach((element) => {
@@ -36,10 +44,10 @@ const Checkout: FC<CheckoutProps> = ({}) => {
     });
   };
   const showPopUp = () => {
-    setIsShowPopUp(true)
-    // setTimeout(() => {
-    //   setIsShowPopUp(false)
-    // }, 7000 );
+    dispatch(setPopUpVisibility(true))
+    setTimeout(() => {
+      dispatch(setPopUpVisibility(false))
+    }, 10000 );
   }
   return (
     <div className={cl.checkout__wrapper}>
@@ -54,21 +62,34 @@ const Checkout: FC<CheckoutProps> = ({}) => {
       validateOnBlur
       onSubmit={(values) => {
         console.log(values);
-        const orderDevices = async () => {
+          console.log(error)
+          const orderDevices = async () => {
           
-          await createOrder({
-            userName: values.name,
-            userPhone: values.phone,
-            userEmail: values.email,
-            totalPrice: totalPrice,
-            devices: basketDevices,
-            userId: user.id
-          })
-        }
-        orderDevices()
-        showPopUp()
-        clearBasket()
-
+            await createOrder({
+              userName: values.name,
+              userPhone: values.phone,
+              userEmail: values.email,
+              totalPrice: totalPrice,
+              devices: basketDevices,
+              userId: user.id
+            })
+           showPopUp()
+           
+          }
+          try {
+            orderDevices()
+          }
+          catch (e:any){
+            console.log(e.message)
+          }
+          finally {
+            clearBasket()
+            navigate('/shop')
+          }
+         
+          
+          
+       
       }}
       validationSchema={CheckoutSchema}>
       {({
@@ -152,39 +173,18 @@ const Checkout: FC<CheckoutProps> = ({}) => {
         </Form>
       )}
     </Formik>
-    <button onClick={showPopUp}>Show</button> 
-   {/* <CSSTransition
-        in={isShowPopUp}
-        nodeRef={noderef}
-        timeout={1000}
-        classNames="alert"
-        unmountOnExit
-        onEnter={() => setShowButton(false)}
-        onExited={() => setShowButton(true)}
-      >
-        <Alert
-          ref={noderef}
-        >
-          <AlertTitle>
-            Animated alert message
-          </AlertTitle>
-          <p>
-            This alert message is being transitioned in and
-            out of the DOM.
-          </p>
-          <Button
-            
-            onClick={() => setIsShowPopUp(false)}
-          >
-            Close
-          </Button>
-        </Alert>
-      </CSSTransition> */}
-    <button onClick={() => setIsShowPopUp(false)}>close</button>
-    
-     <CSSTransition in={isShowPopUp} nodeRef={noderef} timeout={1000} unmountOnExit classNames='popup'><div ref={noderef} >
-      Success
-    </div></CSSTransition> 
+  {error && <Slide direction="left" in={popUpVisibility} mountOnEnter unmountOnExit>
+        <div className={cl.popup__wrapper}>
+          <div className={cl.popup}>
+            <Alert color="error">
+              <AlertTitle>Error</AlertTitle>
+              <p>
+                An error has occured. Please try again.
+              </p>
+            </Alert>
+          </div>
+        </div>
+      </Slide> }  
   </div>
   );
 };

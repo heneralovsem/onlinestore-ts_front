@@ -1,9 +1,12 @@
 .device__img {
     width: 200px;
     height: 150px;
+    cursor: pointer;
 }
 .device__item__wrapper {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    border: 1px solid #e6e6e6;
+    padding: 20px;
 }

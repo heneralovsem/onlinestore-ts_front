@@ -13,17 +13,17 @@ const OrderItem : FC<BrandItemProps> = ({order}) => {
     const dispatch = useAppDispatch()
     
     return (
-        <div>
+        <div className={cl.order__wrapper}>
            <div className={cl.order__user__info}>
             <p>{order.userName}</p>
             <p>{order.userEmail}</p>
             <p>{order.userPhone}</p>
            </div>
-           <div>
+           <div className={cl.order__devices}>
             {order.devices?.map((device) => (
                 <OrderedDevice key={device.id} orderedDevice={device} />
             ))}
-           <p>{order.totalPrice}</p>
+            <h3>Total: {order.devices?.length} devices for {order.totalPrice} $</h3>
            </div>
         </div>
     )

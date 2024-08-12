@@ -11,6 +11,9 @@ import {
   Select,
   InputLabel,
   SelectChangeEvent,
+  Slide,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import { brandsAPI } from "../../services/BrandsService";
 import BrandItem from "../BrandItem/BrandItem";
@@ -24,8 +27,10 @@ import BasketDevice from "../BasketDevice/BasketDevice";
 import { typeSlice } from "../../store/reducers/TypeSlice";
 import { brandSlice } from "../../store/reducers/BrandSlice";
 import { pageSlice } from "../../store/reducers/PageSlice";
+import PopUpSlice, { popUpSlice } from "../../store/reducers/PopUpSlice";
 import ShopPagination from "../Pagination/Pagination";
 import { IDevice } from "../../types/types";
+import { Link } from "react-router-dom";
 // import { createDevice } from "../../http/deviceAPI";
 
 const Shop: FC = () => {
@@ -36,6 +41,7 @@ const Shop: FC = () => {
   const { selectedBrand } = useAppSelector((state) => state.brandReducer);
   const { setBrand } = brandSlice.actions;
   const { currentPage } = useAppSelector((state) => state.pageReducer);
+  const { popUpVisibility } = useAppSelector((state) => state.popUpReducer);
   const [sortingType, setSortingType] = useState("createdAt");
   const dispatch = useAppDispatch();
   const { data: types, error, isLoading } = typesAPI.useFetchAllTypesQuery("");
@@ -48,7 +54,7 @@ const Shop: FC = () => {
     brandId: selectedBrand.id,
     limit: limit,
     page: currentPage,
-    sorting: sortingType
+    sorting: sortingType,
   });
   console.log(devices);
   //@ts-ignore
@@ -71,7 +77,7 @@ const Shop: FC = () => {
   };
   const selectHandler = (e: SelectChangeEvent) => {
     setSortingType(e.target.value);
-    console.log(sortingType)
+    console.log(sortingType);
   };
   // const addDevice = () => {
   //   const formData = new FormData();
@@ -92,11 +98,10 @@ const Shop: FC = () => {
 
   // };
 
-  console.log(user);
+  console.log(popUpVisibility);
   console.log(selectedBrand);
   console.log(selectedType);
-  
-  
+
   // @ts-ignore
   // const addBasketDevice = async () => {
   //   await createBasketDevice({
@@ -106,7 +111,11 @@ const Shop: FC = () => {
   //   })
   // }
   console.log(basketDevices);
-  console.log(devices?.rows?.slice()?.sort((a : IDevice, b:IDevice) =>b.rating! - a.rating! ))
+  console.log(
+    devices?.rows
+      ?.slice()
+      ?.sort((a: IDevice, b: IDevice) => b.rating! - a.rating!)
+  );
   return (
     <div className={cl.shop__wrapper}>
       <div className={cl.filters__bar}>
@@ -172,15 +181,31 @@ const Shop: FC = () => {
         </div>
 
         <div className={cl.shop__flex__column}>
-            <div className={cl.devices__row}>
-              {devices?.rows?.map((device: any) => (
-                <DeviceItem key={device.id} device={device} />
-              ))}
-            </div>
-          
+          <div className={cl.devices__row}>
+            {devices?.rows?.map((device: any) => (
+              <DeviceItem key={device.id} device={device} />
+            ))}
+          </div>
+
           <ShopPagination limit={limit} devicesCount={devices?.count} />
         </div>
       </div>
+      <Slide direction="left" in={popUpVisibility} mountOnEnter unmountOnExit>
+        <div className={cl.popup__wrapper}>
+          <div className={cl.popup}>
+            <Alert>
+              <AlertTitle>Success</AlertTitle>
+              <p>
+                You can check info about your order in{" "}
+                <Link className={cl.checkout__link} to="/profile">
+                  profile
+                </Link>
+                .
+              </p>
+            </Alert>
+          </div>
+        </div>
+      </Slide>
     </div>
   );
 };
