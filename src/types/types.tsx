@@ -48,6 +48,7 @@ export interface IOrderedDevice {
 }
 export interface IOrder {
     id?: number;
+    createdAt?: string;
     userName?: string;
     userPhone?: string;
     userEmail?: string;

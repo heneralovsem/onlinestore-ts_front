@@ -56,7 +56,6 @@ const Shop: FC = () => {
     page: currentPage,
     sorting: sortingType,
   });
-  console.log(devices);
   //@ts-ignore
   const { data: basketDevices } = basketAPI.useFetchAllBasketDevicesQuery(
     user.id

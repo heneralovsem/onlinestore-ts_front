@@ -8,22 +8,24 @@ import { useAppSelector } from '../../hooks/redux';
 import { deviceAPI } from '../../services/DeviceService';
 import { reviewAPI } from '../../services/ReviewService';
 
-interface BasketDeviceProps {
-    orderedDevice: IOrderedDevice
+interface OrderedDeviceProps {
+    orderedDevice: IOrderedDevice,
+    isExpanded: boolean
 }
 
-const OrderedDevice : FC<BasketDeviceProps> = ({orderedDevice}) => {
+const OrderedDevice : FC<OrderedDeviceProps> = ({orderedDevice, isExpanded}) => {
     const {data: device} = deviceAPI.useFetchOneDeviceQuery(orderedDevice.deviceId)
     const {data: avgRating} = reviewAPI.useFetchAverageRatingQuery(orderedDevice.deviceId)
     const navigate = useNavigate()
     const getId = () => {
         navigate(`/shop/${device?.id}`)
     }
-    console.log(device)
+    console.log(orderedDevice)
     const {user} = useAppSelector(state => state.userReducer)
     return (
         <div className={cl.device__item__wrapper} >
-           <div onClick={getId}>
+            {isExpanded ? <div>
+                <div className={cl.device__img__wrapper} onClick={getId}>
            {process.env.REACT_APP_API_URL && <img className={cl.device__img} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
            </div>
            <h3>{device?.name}</h3>
@@ -35,7 +37,11 @@ const OrderedDevice : FC<BasketDeviceProps> = ({orderedDevice}) => {
               value={avgRating ? +avgRating : 0} 
               readOnly
             />
-            <p>{device?.price} $</p> 
+            <p>{device?.price} $</p>
+            </div>   : <div className={cl.device__img__wrapper__small} onClick={getId}>
+           {process.env.REACT_APP_API_URL && <img className={cl.device__img__small} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
+           </div>}
+          
         </div>
     )
 
