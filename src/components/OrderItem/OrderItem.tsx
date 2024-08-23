@@ -21,30 +21,38 @@ const OrderItem: FC<BrandItemProps> = ({ order }) => {
   return (
     <div className={cl.order}>
       {isExpanded ? (
-        <div className={cl.order__info__full}>
-          <div className={cl.order__info__left}>
-            <div className={cl.order__info__header}>
+        <div>
+           <div className={cl.order__info__header}>
+              <div className={cl.order__info__header__left}>
               <p className={cl.order__info__number}>Order #{order.id}</p>
               <p className={cl.order__info__date}>
                 {dayjs(order.createdAt).format("DD/MM/YYYY")}
               </p>
+              </div>
+              <div className={cl.order__info__header__right}>
+              <IconButton onClick={expandInfo}>
+              <ExpandLessIcon />
+            </IconButton>
+              </div>
             </div>
+        
+        <div className={cl.order__info__full}>
+          <div className={cl.order__info__left__full}>
+           
             <p>{order.userName}</p>
             <p>{order.userEmail}</p>
             <p>{order.userPhone}</p>
+            <Button variant="outlined">Leave a review</Button>
           </div>
           <div className={cl.order__devices__full}>
             {order.devices?.map((device) => (
               <OrderedDevice key={device.id} orderedDevice={device} isExpanded={isExpanded} />
             ))}
-          </div>
-          <div className={cl.order__info__right}>
-            <h3>
+             <h3 className={cl.order__devices__total}>
               Total: {order.devices?.length} devices for {order.totalPrice} $
             </h3>
-            <IconButton onClick={expandInfo}>
-              <ExpandLessIcon />
-            </IconButton>
+          </div>
+           
           </div>
         </div>
       ) : (
@@ -62,7 +70,7 @@ const OrderItem: FC<BrandItemProps> = ({ order }) => {
           </div>
           <div className={cl.order__info__right}>
             <h3>
-              Total: {order.devices?.length} devices for {order.totalPrice} $
+              {order.totalPrice} $
             </h3>
             <IconButton onClick={expandInfo}>
               <ExpandMoreIcon />

@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 70%;
 }
 .order__info__short {
     display: flex;
@@ -22,12 +23,18 @@
 .order__info__full {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    gap: 50px;
 }
 .order__info__left {
     display: flex;
     flex-direction: row;
     gap: 10px;
+}
+.order__info__left__full {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30%;
 }
 .order__info__number {
     font-weight: bold;
@@ -41,10 +48,17 @@
 .order__info__header {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
 }
-.order__info__full .order__info__left {
+.order__info__header__left {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.order__devices__total {
+    text-align: right;
+    padding-top: 20px;
 }
