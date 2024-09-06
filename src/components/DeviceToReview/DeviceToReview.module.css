@@ -1,0 +1,20 @@
+.device__img__wrapper {
+    width: 100px;
+    height: 75px;
+}
+.device__img {
+    width: 100px;
+    height: 75px;
+    cursor: pointer;
+}
+.device__item__wrapper {
+    padding-top: 20px;
+    border-top: 1px solid #e6e6e6;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.device__item__btn {
+    width: 200px;
+}

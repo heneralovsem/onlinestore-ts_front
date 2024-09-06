@@ -1,0 +1,35 @@
+.modal__container {
+    background: whitesmoke;
+    padding: 30px 20px;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    max-height: 75%;
+    overflow-y: auto;
+}
+.modal__btn {
+    width: 200px;
+    margin: 0 auto;
+}
+.close__icon__wrapper {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+@media screen and (max-width:768px) {
+    .modal__container {
+        width: 400px;
+    }
+}
+@media screen and (max-width:425px) {
+    .modal__container {
+        width: 280px;
+        padding: 40px 10px;
+    }
+}
