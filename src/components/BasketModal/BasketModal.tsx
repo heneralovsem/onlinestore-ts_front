@@ -32,6 +32,7 @@ const BasketModal: FC<BasketModalProps> = ({
   return (
     <Modal open={modal} onClose={closeModal}>
       <div className={cl.modal__container}>
+        <h2 className={cl.modal__header}>Basket</h2>
         <div className={cl.close__icon__wrapper}>
           <IconButton onClick={closeModal}>
             <CloseIcon />
@@ -43,7 +44,7 @@ const BasketModal: FC<BasketModalProps> = ({
       <div className={cl.total__price__wrapper}>
       <p className={cl.total__price}>{totalPrice}$</p>
       <Link to='/checkout'>
-      <Button variant="contained" color="success" onClick={closeModal}>Checkout</Button>
+      <Button className={cl.modal__btn} variant="contained" color="success" onClick={closeModal}>Checkout</Button>
       </Link>
       </div>
       

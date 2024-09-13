@@ -5,6 +5,8 @@
 .device__item__wrapper {
     display: flex;
     justify-content: space-between;
+    border-top: 1px solid #e6e6e6;
+    padding-top: 20px;
 }
 .device__item__main {
     display: flex;

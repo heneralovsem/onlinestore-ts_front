@@ -6,7 +6,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 600px;
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -14,13 +14,16 @@
     overflow-y: auto;
 }
 .modal__btn {
-    width: 200px;
+    width: 150px;
     margin: 0 auto;
 }
 .close__icon__wrapper {
     position: absolute;
     right: 0px;
     top: 0px;
+}
+.modal__header {
+    font-size: 28px;
 }
 @media screen and (max-width:768px) {
     .modal__container {
@@ -36,9 +39,11 @@
 .total__price__wrapper {
     display: flex;
     align-self: flex-end;
-    gap: 15px;
+    gap: 30px;
     border: 1px solid green;
-    padding: 15px;
+    border-radius: 4px;
+    background-color: #a1d8b6;
+    padding: 20px;
 }
 .total__price {
     align-content: center;

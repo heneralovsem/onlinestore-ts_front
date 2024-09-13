@@ -1,6 +1,8 @@
 .device__img__wrapper {
-    width: 100px;
-    height: 75px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 .device__img {
     width: 100px;

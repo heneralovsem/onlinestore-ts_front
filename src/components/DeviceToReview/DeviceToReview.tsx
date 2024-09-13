@@ -24,8 +24,8 @@ const DeviceToReview : FC<DeviceToReviewProps> = ({orderedDevice}) => {
         <div className={`${cl.device__item__wrapper}`} >
              <div className={cl.device__img__wrapper}>
            {process.env.REACT_APP_API_URL && <img className={cl.device__img} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
-           </div>
            <span className={cl.device__item__name}>{device?.name}</span>
+           </div>
            <Button className={cl.device__item__btn} variant='contained' onClick={getId}>Leave a review</Button>
           
         </div>
