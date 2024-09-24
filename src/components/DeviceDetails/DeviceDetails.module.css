@@ -66,3 +66,9 @@
 .device__info__wrapper td {
     padding-bottom: 20px;
 }
+.popup__wrapper {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 400px;
+}

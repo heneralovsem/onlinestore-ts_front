@@ -42,6 +42,7 @@ const Shop: FC = () => {
   const { setBrand } = brandSlice.actions;
   const { currentPage } = useAppSelector((state) => state.pageReducer);
   const { popUpVisibility } = useAppSelector((state) => state.popUpReducer);
+  const { popUpType } = useAppSelector((state) => state.popUpReducer)
   const [sortingType, setSortingType] = useState("createdAt");
   const dispatch = useAppDispatch();
   const { data: types, error, isLoading } = typesAPI.useFetchAllTypesQuery("");
@@ -189,7 +190,7 @@ const Shop: FC = () => {
           <ShopPagination limit={limit} devicesCount={devices?.count} />
         </div>
       </div>
-      <Slide direction="left" in={popUpVisibility} mountOnEnter unmountOnExit>
+      <Slide direction="left" in={popUpVisibility && popUpType === 'checkout'} mountOnEnter unmountOnExit>
         <div className={cl.popup__wrapper}>
           <div className={cl.popup}>
             <Alert>
@@ -200,6 +201,18 @@ const Shop: FC = () => {
                   profile
                 </Link>
                 .
+              </p>
+            </Alert>
+          </div>
+        </div>
+      </Slide>
+      <Slide direction="left" in={popUpVisibility && popUpType === 'basket'} mountOnEnter unmountOnExit>
+        <div className={cl.popup__wrapper}>
+          <div className={cl.popup}>
+            <Alert>
+              <AlertTitle>Success</AlertTitle>
+              <p>
+                Device has been added to the basket.
               </p>
             </Alert>
           </div>

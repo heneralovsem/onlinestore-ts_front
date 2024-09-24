@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -28,7 +28,7 @@ interface CheckoutProps {}
 const Checkout: FC<CheckoutProps> = ({}) => {
   const { user } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
-  const { setPopUpVisibility } = popUpSlice.actions;
+  const { setPopUpVisibility, setPopUpType } = popUpSlice.actions;
   const { popUpVisibility } = useAppSelector((state) => state.popUpReducer);
   const [devices, setDevices] = useState<Array<number>>([]);
   const [isShowPopUp, setIsShowPopUp] = useState<boolean>(false);
@@ -41,6 +41,7 @@ const Checkout: FC<CheckoutProps> = ({}) => {
   const { data: basketDevices } = basketAPI.useFetchAllBasketDevicesQuery(
     user?.id || 0
   );
+  const [shippingCost, setShippingCost] = useState<number>(0)
   console.log(basketDevices);
   const [createOrder, { error }] = orderAPI.useCreateOrderMutation();
   const clearBasket = async () => {
@@ -51,10 +52,29 @@ const Checkout: FC<CheckoutProps> = ({}) => {
       });
     }
   };
+  useEffect(() => {
+    const checkBasket = () => {
+      if (!basketDevices.length) {
+        navigate('/shop')
+      }
+    }
+    checkBasket()
+    const getShippingCost = () => {
+      if (totalPrice && totalPrice < 1000) {
+        setShippingCost(3)
+      }
+      else if (totalPrice && totalPrice > 1000) {
+        setShippingCost(5)
+      }
+    }
+  getShippingCost()
+  }, [totalPrice])
   const showPopUp = () => {
     dispatch(setPopUpVisibility(true));
+    dispatch(setPopUpType('checkout'))
     setTimeout(() => {
       dispatch(setPopUpVisibility(false));
+      dispatch(setPopUpType(''))
     }, 10000);
   };
   console.log(error);
@@ -180,6 +200,10 @@ const Checkout: FC<CheckoutProps> = ({}) => {
                 <p>
                   {basketDevices?.length} devices for {totalPrice}$
                 </p>
+                <p>
+                Shipping:  {shippingCost}$
+                </p>
+                <p>Total price: {totalPrice ? totalPrice + shippingCost : 0}$</p>
                 <Button color="success" type="submit" variant="contained">
                   Submit
                 </Button>
