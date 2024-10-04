@@ -12,42 +12,52 @@ import { Link } from "react-router-dom";
 interface BasketModalProps {
   modal: boolean;
   closeModal: () => void;
-  basketDevices: Array<IDevice>
+  basketDevices: Array<IDevice>;
 }
 
 const BasketModal: FC<BasketModalProps> = ({
   modal,
   closeModal,
-  basketDevices
+  basketDevices,
 }) => {
-  const {user} = useAppSelector(state => state.userReducer)
-  const [deleteOneBasketDevice] = basketAPI.useDeleteOneBasketDeviceMutation()
-  const {data: totalPrice} = basketAPI.useFetchTotalPriceQuery(user.id)
-  const clearBasket =  async ()  => {
+  const { user } = useAppSelector((state) => state.userReducer);
+  const [deleteOneBasketDevice] = basketAPI.useDeleteOneBasketDeviceMutation();
+  const { data: totalPrice } = basketAPI.useFetchTotalPriceQuery(user.id);
+  const clearBasket = async () => {
     //@ts-ignore
-   basketDevices.forEach(element => {
-       deleteOneBasketDevice(element.id)
-   });
-  }
+    basketDevices.forEach((element) => {
+      deleteOneBasketDevice(element.id);
+    });
+  };
   return (
     <Modal open={modal} onClose={closeModal}>
       <div className={cl.modal__container}>
-        <h2 className={cl.modal__header}>Basket</h2>
+        <h2 className={`${cl.modal__header} ${basketDevices?.length < 1 && cl.modal__header__border}`}>Basket</h2>
         <div className={cl.close__icon__wrapper}>
           <IconButton onClick={closeModal}>
             <CloseIcon />
           </IconButton>
         </div>
-        {basketDevices?.map((basketDevice:any) => (
-        <BasketDevice key={basketDevice.id} basketDevice={basketDevice} />
-      ))}
-      {basketDevices?.length < 1 && <p>You haven't added any devices yet</p>}
-      <div className={cl.total__price__wrapper}>
-      <p className={cl.total__price}>{totalPrice}$</p>
-      <Link to='/checkout'>
-      <Button className={cl.modal__btn} variant="contained" color="success" onClick={closeModal}>Checkout</Button>
-      </Link>
-      </div>
+        {basketDevices?.map((basketDevice: any) => (
+          <BasketDevice key={basketDevice.id} basketDevice={basketDevice} />
+        ))}
+        {basketDevices?.length < 1 ? (
+          <p className={cl.modal__text}>You haven't added any devices yet</p>
+        ) : (
+          <div className={cl.total__price__wrapper}>
+            <p className={cl.total__price}>{totalPrice}$</p>
+            <Link to="/checkout">
+              <Button
+                className={cl.modal__btn}
+                variant="contained"
+                color="success"
+                onClick={closeModal}
+              >
+                Checkout
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </Modal>
   );

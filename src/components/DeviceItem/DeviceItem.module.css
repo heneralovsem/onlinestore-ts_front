@@ -17,3 +17,14 @@
     align-items: center;
     justify-content: space-between;
 }
+
+@media screen and (max-width:1024px) {
+    .device__item__wrapper {
+        width: 33%;
+    }
+}
+@media screen and (max-width:768px) {
+    .device__item__wrapper {
+        width: 50%;
+    }
+}

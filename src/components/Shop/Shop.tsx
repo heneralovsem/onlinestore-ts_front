@@ -34,7 +34,7 @@ import { Link } from "react-router-dom";
 // import { createDevice } from "../../http/deviceAPI";
 
 const Shop: FC = () => {
-  const limit = 5;
+  const limit = 6;
   const { user } = useAppSelector((state) => state.userReducer);
   const { selectedType } = useAppSelector((state) => state.typeReducer);
   const { setType } = typeSlice.actions;

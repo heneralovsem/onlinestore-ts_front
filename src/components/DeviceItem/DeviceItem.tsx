@@ -61,7 +61,7 @@ const DeviceItem: FC<DeviceItemProps> = ({ device }) => {
           max={5}
           precision={0.1}
           defaultValue={0}
-          size="medium"
+          size="small"
           value={avgRating ? +avgRating : 0}
           readOnly
         />

@@ -54,7 +54,7 @@ const Checkout: FC<CheckoutProps> = ({}) => {
   };
   useEffect(() => {
     const checkBasket = () => {
-      if (!basketDevices.length) {
+      if (basketDevices?.length === 0) {
         navigate('/shop')
       }
     }
@@ -68,7 +68,7 @@ const Checkout: FC<CheckoutProps> = ({}) => {
       }
     }
   getShippingCost()
-  }, [totalPrice])
+  }, [basketDevices])
   const showPopUp = () => {
     dispatch(setPopUpVisibility(true));
     dispatch(setPopUpType('checkout'))
