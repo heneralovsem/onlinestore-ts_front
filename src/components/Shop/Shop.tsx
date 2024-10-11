@@ -14,6 +14,7 @@ import {
   Slide,
   Alert,
   AlertTitle,
+  Drawer,
 } from "@mui/material";
 import { brandsAPI } from "../../services/BrandsService";
 import BrandItem from "../BrandItem/BrandItem";
@@ -43,7 +44,8 @@ const Shop: FC = () => {
   const { currentPage } = useAppSelector((state) => state.pageReducer);
   const { popUpVisibility } = useAppSelector((state) => state.popUpReducer);
   const { popUpType } = useAppSelector((state) => state.popUpReducer)
-  const [sortingType, setSortingType] = useState("createdAt");
+  const [sortingType, setSortingType] = useState<string>("createdAt");
+  const [showFilters, setShowFilters] = useState<boolean>(false)
   const dispatch = useAppDispatch();
   const { data: types, error, isLoading } = typesAPI.useFetchAllTypesQuery("");
   const [createType, {}] = typesAPI.useCreateTypeMutation();
@@ -119,24 +121,12 @@ const Shop: FC = () => {
   return (
     <div className={cl.shop__wrapper}>
       <div className={cl.filters__bar}>
-        {selectedBrand.name || selectedType.name ? (
-          <div className={cl.applied__filters}>
-            <p>Applied filters:</p>
-            <Button variant="outlined" onClick={clearAllFilters}>
-              Clear all
-            </Button>
-            {selectedBrand.name && (
-              <Button variant="outlined" onClick={clearBrandFilter}>
-                {selectedBrand.name}
-              </Button>
-            )}
-            {selectedType.name && (
-              <Button variant="outlined" onClick={clearTypeFilter}>
-                {selectedType.name}
-              </Button>
-            )}
-          </div>
-        ) : null}
+        <div className={cl.filters__left}>
+          <Button className={cl.filters__button} onClick={() => setShowFilters(!showFilters)} variant="contained">Filters</Button>
+          <p className={cl.filters__left__text}>
+            {devices?.count} devices found
+          </p>
+        </div>
         <div className={cl.applied__sorting}>
           <FormControl size="small">
             <InputLabel id="sort-select-label">Sort by</InputLabel>
@@ -155,7 +145,54 @@ const Shop: FC = () => {
           </FormControl>
         </div>
       </div>
+      {selectedBrand.name || selectedType.name ? (
+          <div className={cl.applied__filters}>
+            <p className={cl.applied__filters__text}>Applied filters:</p>
+            {selectedBrand.name && (
+              <Button size='small' variant="outlined" onClick={clearBrandFilter}>
+                {selectedBrand.name}
+              </Button>
+            )}
+            {selectedType.name && (
+              <Button size='small' variant="outlined" onClick={clearTypeFilter}>
+                {selectedType.name}
+              </Button>
+            )}
+             <Button size='small' variant="outlined" onClick={clearAllFilters}>
+              Clear all
+            </Button>
+          </div>
+        ) : null}
       <div className={cl.shop__flex__row}>
+        <Drawer className={cl.filters__drawer} anchor="left" open={showFilters} onClose={() => setShowFilters(false)}>
+        <div className={`${cl.filters__column} ${cl.filters__column__active}`}>
+          <div className={cl.types__column__wrapper}>
+            <p>
+              Types <span className={cl.filters__count}>{types?.length}</span>
+            </p>
+            <div className={cl.types__column}>
+              {types?.map((type) => (
+                <TypeItem key={type.id} type={type} />
+              ))}
+            </div>
+          </div>
+          <div className={cl.brands__column__wrapper}>
+            <p>
+              Brands{" "}
+              <span className={cl.filters__count}> {brands?.length}</span>
+            </p>
+            <div className={cl.brands__column}>
+              {brands?.map((brand) => (
+                <BrandItem key={brand.id} brand={brand} />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className={cl.drawer__footer}>
+            <p>{devices?.count} devices found</p>
+            <Button onClick={() => setShowFilters(false)} variant="contained">Show</Button>
+          </div>
+        </Drawer>
         <div className={cl.filters__column}>
           <div className={cl.types__column__wrapper}>
             <p>
