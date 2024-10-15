@@ -122,7 +122,10 @@ const Shop: FC = () => {
     <div className={cl.shop__wrapper}>
       <div className={cl.filters__bar}>
         <div className={cl.filters__left}>
-          <Button className={cl.filters__button} onClick={() => setShowFilters(!showFilters)} variant="contained">Filters</Button>
+          <div className={cl.filters__button}>
+          <Button onClick={() => setShowFilters(!showFilters)} variant="contained">Filters</Button>
+          </div>
+          
           <p className={cl.filters__left__text}>
             {devices?.count} devices found
           </p>

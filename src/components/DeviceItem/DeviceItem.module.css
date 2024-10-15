@@ -20,11 +20,26 @@
 
 @media screen and (max-width:1024px) {
     .device__item__wrapper {
-        width: 33%;
+        width: 33.3%;
     }
 }
 @media screen and (max-width:768px) {
     .device__item__wrapper {
         width: 50%;
+    }
+}
+@media screen and (max-width:560px) {
+    .device__item__wrapper {
+        padding: 10px;
+    }
+    
+}
+@media screen and (max-width: 425px) {
+    .device__item__wrapper {
+        width: 100%;
+        padding: 20px;
+    }
+    .device__img {
+        height: 200px;
     }
 }

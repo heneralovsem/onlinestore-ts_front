@@ -3,6 +3,7 @@ import { IType } from '../../types/types';
 import Button from '@mui/material/Button';
 import { typesAPI } from '../../services/TypesService';
 import { typeSlice } from '../../store/reducers/TypeSlice';
+import { pageSlice } from '../../store/reducers/PageSlice'; 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import cl from './TypeItem.module.css'
 
@@ -14,6 +15,7 @@ interface TypeItemProps {
 const TypeItem : FC<TypeItemProps> = ({type}) => {
     const [deleteType, {}] = typesAPI.useDeleteTypeMutation()
     const dispatch = useAppDispatch()
+    const {setPage} = pageSlice.actions
     const {setType} = typeSlice.actions
     const {selectedType} = useAppSelector(state => state.typeReducer)
     const deleteTypeItem = async () => {
@@ -22,9 +24,11 @@ const TypeItem : FC<TypeItemProps> = ({type}) => {
     const selectType = () => {
         if (selectedType.id === type.id) {
             dispatch(setType({}))
+            dispatch(setPage(1))
         }
         else {
             dispatch(setType(type as IType))
+            dispatch(setPage(1))
         }
         
     }

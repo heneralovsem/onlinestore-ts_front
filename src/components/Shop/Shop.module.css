@@ -131,16 +131,20 @@
     align-items: center;
 }
 .drawer__footer {
-    
+    position: fixed;
+    bottom: 0px;
+    left: 125px;
+    z-index: 1500;
+    transform: translate(-50%, 0);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     text-align: center;
-    padding: 0 10px;
-}
-.filters__drawer {
-    display: flex;
-    flex-direction: column;
+    border: 0.5px solid #E3E5ED;
+    padding: 10px;
+    width: 250px;
+    background-color: white;
+    
 }
 .sort__select {
     width: 200px;
@@ -151,20 +155,23 @@
     right: 0px;
     width: 400px;
 }
-@media screen and (max-width:768px) {
-    .modal__container {
-        width: 300px;
-    }
-    .shop__wrapper {
-        padding: 20px;
-    }
+@media screen and (max-width:1024px) {
     .filters__column {
         display: none;
     }
+    .filters__button {
+        display: block;
+    }
+    .shop__flex__column {
+        width: 100%;
+    }
     .filters__column__active {
         display: flex;
-        gap: 80px;
-        padding: 20px 0px;
+        gap: 40px;
+        height: 80%;
+    }
+    .brands__column__wrapper {
+        padding-bottom: 125px;
     }
     .brands__column {
         width: 250px;
@@ -172,11 +179,43 @@
     .types__column {
         width: 250px;
     }
-    .shop__flex__column {
-        width: 100%;
-    }
-    .filters__button {
+    .drawer__wrapper {
         display: block;
+        position: relative;
+    }
+}
+@media screen and (max-width:768px) {
+    .modal__container {
+        width: 300px;
+    }
+    .shop__wrapper {
+        padding: 20px;
+    }
+}
+@media screen and (max-width:560px) {
+    .shop__wrapper {
+        padding: 10px;
+    }
+    .filters__left {
+        gap: 10px;
+    }
+    .filters__left__text {
+        font-size: 14px;
+    }
+    .sort__select {
+        width: 150px;
+    }
+    .brands__column {
+        width: 200px;
+        max-height: 250px;
+    }
+    .types__column {
+        width: 200px;
+        max-height: 250px;
+    }
+    .drawer__footer {
+        width: 200px;
+        left: 100px;
     }
 }
 @media screen and (max-width:425px) {
@@ -184,4 +223,30 @@
         width: 280px;
         padding: 40px 10px;
     }
+    .filters__left {
+        gap: 6px;
+    }
+    .filters__left__text {
+        font-size: 12px;
+    }
+    .sort__select {
+        width: 125px;
+    }
+}
+@media screen and (max-width:375px) {
+    .sort__select {
+        width: 100px;
+        
+    }
+    .brands__column {
+        width: 170px;
+    }
+    .types__column {
+        width: 170px;
+    }
+    .drawer__footer {
+        width: 170px;
+        left: 85px;
+    }
+    
 }
