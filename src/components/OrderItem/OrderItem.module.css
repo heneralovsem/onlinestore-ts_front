@@ -5,8 +5,12 @@
 .order__devices__short {
     display: flex;
     flex-direction: row;
-    gap: 15px;
-    
+    gap: 10px;
+    max-width: 290px;
+    overflow: hidden;
+}
+.order__devices__short__hidden {
+    display: none;
 }
 .order__devices__full {
     display: flex;
@@ -26,6 +30,11 @@
     gap: 50px;
 }
 .order__info__left {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.order__info__left__header {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -61,4 +70,47 @@
 .order__devices__total {
     text-align: right;
     padding-top: 20px;
+}
+@media screen and (max-width:768px) {
+    .order__devices__short {
+        display: none;
+    }
+    .order__devices__short__hidden {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        max-width: 470px;
+        overflow: hidden;
+    }
+    
+}
+@media screen and (max-width: 560px) {
+    .order__devices__short__hidden {
+        max-width: 410px;
+    }
+    .order {
+        padding: 10px;
+    }
+    .order__info__number {
+        font-size: 14px;
+    }
+    .order__info__date {
+        font-size: 14px;
+    }
+    .order__info__total {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .order__devices__short__hidden {
+        max-width: 230px;
+    }
+    .order__info__total {
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 375px) {
+    .order__devices__short__hidden {
+        max-width: 170px;
+    }
 }

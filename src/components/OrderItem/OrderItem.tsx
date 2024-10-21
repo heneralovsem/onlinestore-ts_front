@@ -76,10 +76,21 @@ const OrderItem: FC<BrandItemProps> = ({ order }) => {
       ) : (
         <div className={cl.order__info__short}>
           <div className={cl.order__info__left}>
+            <div className={cl.order__info__left__header}>
             <p className={cl.order__info__number}>Order #{order.id}</p>
             <p className={cl.order__info__date}>
               {dayjs(order.createdAt).format("DD/MM/YYYY")}
             </p>
+            </div>
+            <div className={cl.order__devices__short__hidden}>
+            {order.devices?.map((device) => (
+              <OrderedDevice
+                key={device.id}
+                orderedDevice={device}
+                isExpanded={isExpanded}
+              />
+            ))}
+          </div>
           </div>
           <div className={cl.order__devices__short}>
             {order.devices?.map((device) => (
@@ -91,7 +102,7 @@ const OrderItem: FC<BrandItemProps> = ({ order }) => {
             ))}
           </div>
           <div className={cl.order__info__right}>
-            <h3>{order.totalPrice} $</h3>
+            <h3 className={cl.order__info__total}>{order.totalPrice} $</h3>
             <IconButton onClick={expandInfo}>
               <ExpandMoreIcon />
             </IconButton>

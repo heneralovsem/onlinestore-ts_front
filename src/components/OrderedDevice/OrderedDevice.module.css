@@ -3,8 +3,8 @@
     height: 100px;
 }
 .device__img__wrapper__small {
-    width: 80px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 }
 .device__img {
     width: 150px;
@@ -12,8 +12,8 @@
     cursor: pointer;
 }
 .device__img__small {
-    width: 80px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
 }
 .device__item__wrapper {

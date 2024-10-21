@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { typesAPI } from "../../services/TypesService";
 import TypeItem from "../TypeItem/TypeItem";
 import {
@@ -167,7 +167,7 @@ const Shop: FC = () => {
           </div>
         ) : null}
       <div className={cl.shop__flex__row}>
-        <Drawer className={cl.filters__drawer} anchor="left" open={showFilters} onClose={() => setShowFilters(false)}>
+        <Drawer className={cl.filters__drawer} variant="temporary" anchor="left" open={showFilters} onClose={() => setShowFilters(false)}>
         <div className={`${cl.filters__column} ${cl.filters__column__active}`}>
           <div className={cl.types__column__wrapper}>
             <p>

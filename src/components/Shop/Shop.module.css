@@ -133,7 +133,7 @@
 .drawer__footer {
     position: fixed;
     bottom: 0px;
-    left: 125px;
+    left: 100px;
     z-index: 1500;
     transform: translate(-50%, 0);
     display: flex;
@@ -142,7 +142,7 @@
     text-align: center;
     border: 0.5px solid #E3E5ED;
     padding: 10px;
-    width: 250px;
+    width: 200px;
     background-color: white;
     
 }
@@ -179,9 +179,9 @@
     .types__column {
         width: 250px;
     }
-    .drawer__wrapper {
-        display: block;
-        position: relative;
+    .drawer__footer {
+        width: 250px;
+        left: 125px;
     }
 }
 @media screen and (max-width:768px) {
