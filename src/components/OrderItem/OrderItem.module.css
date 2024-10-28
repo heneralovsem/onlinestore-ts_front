@@ -79,14 +79,23 @@
         display: flex;
         flex-direction: row;
         gap: 10px;
-        max-width: 470px;
+        max-width: 350px;
         overflow: hidden;
     }
-    
+    .order__info__full {
+        flex-direction: column;
+        gap: 25px;
+    }
+    .order__info__left__full {
+        width: 100%;
+    }
+    .order__devices__full {
+        width: 100%;
+    }
 }
 @media screen and (max-width: 560px) {
     .order__devices__short__hidden {
-        max-width: 410px;
+        max-width: 290px;
     }
     .order {
         padding: 10px;
@@ -103,7 +112,7 @@
 }
 @media screen and (max-width: 480px) {
     .order__devices__short__hidden {
-        max-width: 230px;
+        max-width: 240px;
     }
     .order__info__total {
         font-size: 14px;
@@ -111,6 +120,6 @@
 }
 @media screen and (max-width: 375px) {
     .order__devices__short__hidden {
-        max-width: 170px;
+        max-width: 190px;
     }
 }

@@ -39,3 +39,49 @@
     gap: 20px;
     align-items: center;
 }
+.device__name {
+    max-width: 250px;
+}
+@media screen and (max-width: 900px) {
+    .device__name {
+        max-width: 200px;
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 560px) {
+    .device__img__wrapper__small {
+        width: 40px;
+        height: 40px;
+    }
+    .device__img__small {
+        width: 40px;
+        height: 40px;
+    }
+    .device__img__wrapper {
+        width: 120px;
+        height: 80px;
+    }
+    .device__img {
+        width: 120px;
+        height: 80px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .device__img__wrapper {
+        width: 100px;
+        height: 75px;
+    }
+    .device__img {
+        width: 100px;
+        height: 75px;
+    }
+    .device__name {
+        max-width: 150px;
+        font-size: 14px;
+    }
+}
+@media screen and (max-width:375px) {
+    .device__name {
+        max-width: 120px;
+    }
+}

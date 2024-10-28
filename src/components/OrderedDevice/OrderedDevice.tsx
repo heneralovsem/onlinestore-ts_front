@@ -28,7 +28,7 @@ const OrderedDevice : FC<OrderedDeviceProps> = ({orderedDevice, isExpanded}) => 
                 <div className={cl.device__img__wrapper} onClick={getId}>
            {process.env.REACT_APP_API_URL && <img className={cl.device__img} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
            </div>
-           <h3>{device?.name}</h3>
+           <h3 className={cl.device__name}>{device?.name}</h3>
            </div>
             <p>{device?.price} $</p>
             </div>   : <div className={cl.device__img__wrapper__small} onClick={getId}>

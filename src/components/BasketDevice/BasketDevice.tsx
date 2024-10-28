@@ -30,7 +30,7 @@ const BasketDevice : FC<BasketDeviceProps> = ({basketDevice}) => {
             <div className={cl.device__item__img} onClick={getId}>
            {process.env.REACT_APP_API_URL && <img className={cl.device__img} src={process.env.REACT_APP_API_URL + device?.img} alt="s" /> }
            </div>
-           <p>{device?.name}</p>
+           <p className={cl.device__item__name}>{device?.name}</p>
            </div>
            <div className={cl.device__item__right}>
            <IconButton onClick={clearBasketDevice}>
