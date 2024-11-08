@@ -197,13 +197,25 @@ const Checkout: FC<CheckoutProps> = ({}) => {
               </main>
               <aside className={cl.checkout__aside}>
                 <h2>Total</h2>
-                <p>
-                  {basketDevices?.length} devices for {totalPrice}$
-                </p>
-                <p>
-                Shipping:  {shippingCost}$
-                </p>
-                <p>Total price: {totalPrice ? totalPrice + shippingCost : 0}$</p>
+                <div className={cl.checkout__aside__flex}>
+                <span>
+                  {basketDevices?.length} devices for 
+                </span>
+                <span>{totalPrice}$</span>
+                </div>
+                <div className={cl.checkout__aside__flex}>
+                <span>
+                Shipping: 
+                </span>
+                <span>
+                {shippingCost}$
+                </span>
+                  </div>
+               <div className={cl.checkout__aside__flex}>
+               <span>Total price:</span>
+               <span>{totalPrice ? totalPrice + shippingCost : 0}$</span>
+               </div>
+               
                 <Button color="success" type="submit" variant="contained">
                   Submit
                 </Button>

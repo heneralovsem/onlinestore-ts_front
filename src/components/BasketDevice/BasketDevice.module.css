@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
 }
 @media screen and (max-width: 1024px) {
     .device__img {
@@ -26,5 +27,10 @@
     .device__item__name {
         font-size: 14px;
         max-width: 150px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .device__img {
+        width: 80px;
     }
 }

@@ -46,7 +46,11 @@
     right: 0px;
     width: 400px;
 }
-
+.checkout__aside__flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 @media screen and (max-width:1440px) {
     .devices__wrapper {
         width: 450px;
@@ -78,6 +82,11 @@
         width: 100%;
     }
     .checkout__aside {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 480px ){
+    .checkout__wrapper {
         width: 100%;
     }
 }

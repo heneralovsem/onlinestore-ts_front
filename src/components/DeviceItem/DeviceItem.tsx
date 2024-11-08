@@ -72,9 +72,9 @@ const DeviceItem: FC<DeviceItemProps> = ({ device }) => {
           <ShoppingCartIcon color="success" />
         </IconButton>
       </div>
-      <Button onClick={deleteDevice} variant="outlined">
+      {/* <Button onClick={deleteDevice} variant="outlined">
         Delete
-      </Button>
+      </Button> */}
     </div>
   );
 };

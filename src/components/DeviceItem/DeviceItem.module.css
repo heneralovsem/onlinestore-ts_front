@@ -9,15 +9,21 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    /* justify-content: space-between; */
     border: 0.5px solid #D9DDDC;
     padding: 20px;
+    max-height: 300px;
 }
 .price__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-
+@media screen and (max-width: 1200px) {
+    .device__item__wrapper {
+        width: 33.3%;
+    }
+}
 @media screen and (max-width:1024px) {
     .device__item__wrapper {
         width: 33.3%;
