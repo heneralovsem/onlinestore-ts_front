@@ -12,22 +12,33 @@
     /* justify-content: space-between; */
     border: 0.5px solid #D9DDDC;
     padding: 20px;
-    max-height: 300px;
 }
 .price__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+.device__name {
+    display: block;
+    overflow: hidden;
+    line-height: 18px;
+    height: 36px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  -webkit-box-orient: vertical;  
+    
+  
+}
 @media screen and (max-width: 1200px) {
     .device__item__wrapper {
-        width: 33.3%;
+        width: 50%;
     }
 }
 @media screen and (max-width:1024px) {
-    .device__item__wrapper {
+    /* .device__item__wrapper {
         width: 33.3%;
-    }
+    } */
 }
 @media screen and (max-width:768px) {
     .device__item__wrapper {
@@ -45,7 +56,7 @@
         width: 100%;
         padding: 20px;
     }
-    .device__img {
-        height: 200px;
-    }
+    /* .device__img {
+        height: 175px;
+    } */
 }

@@ -55,7 +55,7 @@ const DeviceItem: FC<DeviceItemProps> = ({ device }) => {
           />
         )}
       </div>
-      <p>{device.name}</p>
+      <p className={cl.device__name}>{device.name}</p>
       <div className={cl.rating__wrapper}>
         <Rating
           max={5}

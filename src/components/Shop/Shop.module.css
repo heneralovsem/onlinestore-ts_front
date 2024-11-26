@@ -156,6 +156,35 @@
     width: 400px;
 }
 @media screen and (max-width:1024px) {
+    /* .filters__column {
+        display: none;
+    }
+    .filters__button {
+        display: block;
+    }
+    .shop__flex__column {
+        width: 100%;
+    }
+    .filters__column__active {
+        display: flex;
+        gap: 40px;
+        height: 80%;
+    }
+    .brands__column__wrapper {
+        padding-bottom: 125px;
+    }
+    .brands__column {
+        width: 250px;
+    }
+    .types__column {
+        width: 250px;
+    }
+    .drawer__footer {
+        width: 250px;
+        left: 125px;
+    } */
+}
+@media screen and (max-width:768px) {
     .filters__column {
         display: none;
     }
@@ -183,8 +212,6 @@
         width: 250px;
         left: 125px;
     }
-}
-@media screen and (max-width:768px) {
     .modal__container {
         width: 300px;
     }
